@@ -13,17 +13,15 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "sdk.example"
+      "bundleIdentifier": "io.portone.sdk.example"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "sdk.example"
+      "package": "io.portone.sdk.example"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "plugins": ["@portone/react-native-sdk"]
   }
 }

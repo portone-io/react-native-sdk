@@ -1,6 +1,5 @@
 import { appScheme } from './appScheme'
-import { createRef, type RefObject } from 'react'
-import { Linking } from 'react-native'
+import { Linking, Platform } from 'react-native'
 import WebView from 'react-native-webview'
 import type {
   ShouldStartLoadRequest,
@@ -25,18 +24,16 @@ function onMessage(
 
 function onShouldStartLoadWithRequest<Response>(
   request: ShouldStartLoadRequest,
-  webview: RefObject<WebView>,
   onComplete?: (response: Response) => void
 ) {
   const url = request.url
-  const [protocol] = url.split(':', 2)
+  const protocol = url.split(':', 2)[0]!
   switch (protocol) {
     case 'about':
     case 'http':
     case 'https':
       return true
     case 'portone': {
-      webview.current?.stopLoading()
       const { searchParams } = new URL(url)
       onComplete?.(Object.fromEntries(searchParams.entries()) as Response)
       return false
@@ -63,8 +60,12 @@ function onShouldStartLoadWithRequest<Response>(
       return false
     }
     default: {
-      if (protocol! in appScheme) {
-        const marketUrl = `itms-apps://apps.apple.com/app/${appScheme[protocol!]?.ios}`
+      console.log(protocol)
+      if (protocol in appScheme) {
+        const marketUrl =
+          Platform.OS === 'android'
+            ? `market://details?id=${appScheme[protocol]?.android}`
+            : `itms-apps://apps.apple.com/app/${appScheme[protocol]?.ios}`
         marketIfFail(url, marketUrl)
       } else Linking.openURL(url).catch(() => {})
       return false
@@ -78,27 +79,16 @@ export function SdkDelegate<Request extends object, Response>({
   onError,
   onComplete,
 }: SdkDelegateProps<Request, Response>) {
-  const webview = createRef<WebView>()
-
   return (
     <WebView
-      ref={webview}
       originWhitelist={['*']}
       source={{
-        html: `
-          <script type="module">
-            import * as PortOne from "https://cdn.portone.io/v2/browser-sdk.esm.js";
-            PortOne.${method}(JSON.parse(window.ReactNativeWebView.injectedObjectJson())).catch((e) => {
-              const error = e instanceof Error ? ({ ...e, message: e.message }) : e;
-              window.ReactNativeWebView.postMessage(JSON.stringify({ error }));
-            })
-          </script>
-        `,
+        uri: `https://portone-io.github.io/react-native-sdk/SdkDelegate.html?method=${method}`,
       }}
       injectedJavaScriptObject={{ ...request, redirectUrl: 'portone://blank' }}
       onMessage={(event) => onMessage(event, onError)}
       onShouldStartLoadWithRequest={(event) =>
-        onShouldStartLoadWithRequest(event, webview, onComplete)
+        onShouldStartLoadWithRequest(event, onComplete)
       }
     />
   )
@@ -110,28 +100,18 @@ export function SdkUIDelegate<Request extends { uiType: string }, Response>({
   onError,
   onComplete,
 }: SdkDelegateProps<Request, Response>) {
-  const webview = createRef<WebView>()
-
   return (
     <WebView
-      ref={webview}
       originWhitelist={['*']}
       source={{
-        html: `
-          <div class="portone-ui-container" data-portone-ui-type="${request.uiType}"></div>
-          <script type="module">
-            import * as PortOne from "https://cdn.portone.io/v2/browser-sdk.esm.js";
-            PortOne.${method}(JSON.parse(window.ReactNativeWebView.injectedObjectJson())).catch((e) => {
-              const error = e instanceof Error ? ({ ...e, message: e.message }) : e;
-              window.ReactNativeWebView.postMessage(JSON.stringify({ error }));
-            })
-          </script>
-        `,
+        uri: `https://portone-io.github.io/react-native-sdk/SdkUIDelegate.html?method=${method}&uiType=${request.uiType}`,
       }}
-      injectedJavaScriptObject={{ ...request, redirectUrl: 'portone://blank' }}
+      injectedJavaScriptObject={
+        { ...request, redirectUrl: 'portone://blank' } as object
+      }
       onMessage={(event) => onMessage(event, onError)}
       onShouldStartLoadWithRequest={(event) =>
-        onShouldStartLoadWithRequest(event, webview, onComplete)
+        onShouldStartLoadWithRequest(event, onComplete)
       }
     />
   )

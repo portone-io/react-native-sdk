@@ -60,6 +60,10 @@ export const appScheme: Record<string, AppScheme> = {
     ios: 'id695436326',
     android: 'com.kbcard.cxh.appcard',
   },
+  'kb-screen': {
+    ios: 'id695436326',
+    android: 'com.kbcard.cxh.appcard',
+  },
   'kbbank': {
     ios: 'id373742138',
     android: 'com.kbstar.kbbank',
@@ -165,8 +169,8 @@ export const appScheme: Record<string, AppScheme> = {
     android: 'com.wooricard.smartapp',
   },
   'newsmartpib': {
-    ios: 'id1499598869',
-    android: 'com.wooricard.smartapp',
+    ios: 'id1470181651',
+    android: 'com.wooribank.smart.npib',
   },
   'supertoss': {
     ios: 'id839333328',

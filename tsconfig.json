@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "paths": {
-      "@portone/react-native-sdk": ["./src/index"]
-    },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,

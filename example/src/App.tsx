@@ -1,17 +1,18 @@
-import { Alert, StyleSheet, View } from 'react-native'
+import { Alert, SafeAreaView, StyleSheet } from 'react-native'
 import { Payment } from '@portone/react-native-sdk'
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={style.container}>
       <Payment
         request={{
-          storeId: 'storeId',
-          channelKey: 'channelKey',
+          storeId: 'stordId',
           paymentId: 'paymentId',
           orderName: 'orderName',
           totalAmount: 1000,
           currency: 'CURRENCY_KRW',
+          channelKey: 'channelKey',
+          productType: 'PRODUCT_TYPE_DIGITAL',
           payMethod: 'CARD',
         }}
         onComplete={(response) =>
@@ -19,19 +20,14 @@ export default function App() {
         }
         onError={(error) => Alert.alert('Error', error.message)}
       />
-    </View>
+    </SafeAreaView>
   )
 }
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
   },
 })

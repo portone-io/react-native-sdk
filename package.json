@@ -36,7 +36,6 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-sdk-example",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -73,6 +72,7 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.5.0",
+    "@expo/config-plugins": "^8.0.8",
     "@portone/browser-sdk": "^0.0.9",
     "@react-native/eslint-config": "^0.73.1",
     "@release-it/conventional-changelog": "^5.0.0",
@@ -88,7 +88,7 @@
     "react": "18.2.0",
     "react-native": "^0.74.5",
     "react-native-builder-bob": "^0.30.0",
-    "release-it": "^17.6.0",
+    "release-it": "^15.4.1",
     "typescript": "<5.2.0"
   },
   "eslintConfig": {
@@ -121,13 +121,14 @@
     "@types/react": "^18.2.44"
   },
   "peerDependencies": {
+    "expo": "*",
     "react": "*",
     "react-native": "*"
   },
   "workspaces": [
     "example"
   ],
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "pnpm@9.10.0",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
@@ -196,6 +197,6 @@
     "version": "0.41.0"
   },
   "dependencies": {
-    "react-native-webview": "~13.8.6"
+    "react-native-webview": "~13.8.7"
   }
 }
