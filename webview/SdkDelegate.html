@@ -1,0 +1,8 @@
+<script type="module">
+  import * as PortOne from "https://cdn.portone.io/v2/browser-sdk.esm.js";
+  const method = new URLSearchParams(location.search).get("method");
+  PortOne[method](JSON.parse(window.ReactNativeWebView.injectedObjectJson())).catch((e) => {
+    const error = e instanceof Error ? ({ ...e, message: e.message }) : e;
+    window.ReactNativeWebView.postMessage(JSON.stringify({ error }));
+  })
+</script>

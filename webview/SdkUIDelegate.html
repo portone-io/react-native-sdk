@@ -1,0 +1,12 @@
+<div id="portone-ui-container" class="portone-ui-container"></div>
+<script type="module">
+  import * as PortOne from "https://cdn.portone.io/v2/browser-sdk.esm.js";
+  const searchParams = new URLSearchParams(location.search);
+  const method = searchParams.get("method");
+  const uiType = searchParams.get("uiType");
+  document.getElementById("portone-ui-container").setAttribute('data-portone-ui-type', 'uiType');
+  PortOne[method](JSON.parse(window.ReactNativeWebView.injectedObjectJson())).catch((e) => {
+    const error = e instanceof Error ? ({ ...e, message: e.message }) : e;
+    window.ReactNativeWebView.postMessage(JSON.stringify({ error }));
+  })
+</script>
