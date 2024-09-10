@@ -21,10 +21,12 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build package
-        run: yarn prepare
+        run: pnpm prepare
 
       - name: Release
-        run: yarn release --ci --npm.skipChecks
+        run: |
+          pnpm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+          pnpm release --ci --npm.skipChecks
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
