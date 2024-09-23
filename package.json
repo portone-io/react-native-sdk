@@ -41,6 +41,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
+    "example": "pnpm -C example",
     "release": "release-it"
   },
   "keywords": [
