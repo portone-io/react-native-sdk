@@ -41,6 +41,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
+    "example": "pnpm -C example",
     "release": "release-it"
   },
   "keywords": [
@@ -128,7 +129,7 @@
   "workspaces": [
     "example"
   ],
-  "packageManager": "pnpm@9.10.0",
+  "packageManager": "pnpm@9.11.0",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
