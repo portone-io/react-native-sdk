@@ -41,8 +41,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
-    "example": "pnpm -C example",
-    "release": "release-it"
+    "example": "pnpm -C example"
   },
   "keywords": [
     "react-native",
@@ -71,6 +70,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.9",
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.5.0",
     "@expo/config-plugins": "^8.0.8",
@@ -89,7 +89,6 @@
     "react": "18.2.0",
     "react-native": "^0.74.5",
     "react-native-builder-bob": "^0.30.0",
-    "release-it": "^15.4.1",
     "typescript": "<5.2.0"
   },
   "eslintConfig": {
@@ -141,23 +140,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular"
-      }
-    }
   },
   "prettier": {
     "quoteProps": "consistent",

@@ -1,10 +1,10 @@
-import { appScheme } from './appScheme'
 import { Linking, Platform } from 'react-native'
 import WebView from 'react-native-webview'
 import type {
   ShouldStartLoadRequest,
   WebViewMessageEvent,
 } from 'react-native-webview/lib/WebViewTypes'
+import { appScheme } from './appScheme'
 
 export type SdkDelegateProps<Request, Response> = {
   method: string
@@ -53,14 +53,12 @@ function onShouldStartLoadWithRequest<Response>(
         Object.entries(appScheme).find(
           ([, s]) => s.android === packageName
         )?.[0]
-      console.log(scheme, packageName)
       const redirectUrl = `${scheme}${url.slice(protocol.length)}`
       const playUrl = `market://details?id=${packageName}`
       marketIfFail(redirectUrl, playUrl)
       return false
     }
     default: {
-      console.log(protocol)
       if (protocol in appScheme) {
         const marketUrl =
           Platform.OS === 'android'
