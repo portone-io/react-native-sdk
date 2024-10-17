@@ -2,8 +2,10 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: ['main']
-  workflow_dispatch:
+    branches:
+      - main
+    paths:
+      - webview
 
 permissions:
   contents: read

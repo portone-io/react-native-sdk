@@ -11,5 +11,5 @@ runs:
       with:
         node-version-file: .nvmrc
     - name: Install dependencies
-      run: pnpm install --ignore-workspace
+      run: pnpm install
       shell: bash

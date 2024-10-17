@@ -15,7 +15,8 @@
         "types": "./lib/typescript/commonjs/src/index.d.ts",
         "default": "./lib/commonjs/index.js"
       }
-    }
+    },
+    "./plugin": "./app.plugin.js"
   },
   "files": [
     "src",
@@ -23,6 +24,7 @@
     "android",
     "ios",
     "cpp",
+    "app.plugin.js",
     "*.podspec",
     "!ios/build",
     "!android/build",
@@ -123,11 +125,9 @@
   "peerDependencies": {
     "expo": "*",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-webview": "*"
   },
-  "workspaces": [
-    "example"
-  ],
   "packageManager": "pnpm@9.11.0",
   "jest": {
     "preset": "react-native",
@@ -180,6 +180,7 @@
     "version": "0.41.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.25.7",
     "react-native-webview": "~13.8.7"
   }
 }

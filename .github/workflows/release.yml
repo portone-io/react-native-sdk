@@ -15,9 +15,6 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Build package
-        run: pnpm prepare
-
       - name: Create release pull request or publish to npm
         id: changesets
         uses: changesets/action@v1
