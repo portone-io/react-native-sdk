@@ -4,7 +4,7 @@ React Native 환경에서 포트원 V2 결제 시스템에 연동하기 위한 S
 
 ## 의존성
 
-Node.js v18을 지원하며, Expo와 react-native-webview ~13.8.7을 사용합니다.
+Node.js v18을 지원하며, Expo 51.0.38과 react-native-webview 13.8.6 환경에서 테스트되었습니다.
 
 ## 기술 지원
 
@@ -18,12 +18,12 @@ Node.js v18을 지원하며, Expo와 react-native-webview ~13.8.7을 사용합�
 expo install @portone/react-native-sdk react-native-webview
 ```
 
-2. app.json의 plugin 항목으로 @portone/react-native-sdk를 추가합니다.
+2. app.json의 plugin 항목으로 `@portone/react-native-sdk/plugin`를 추가합니다.
 
 ```json
 {
   "expo": {
-    "plugins": ["@portone/react-native-sdk"]
+    "plugins": ["@portone/react-native-sdk/plugin"]
   }
 }
 ```
@@ -41,12 +41,6 @@ import {
 } from '@portone/react-native-sdk'
 
 <Payment request={/* ... */} />
-```
-
-`example` 디렉토리에 있는 예시 프로젝트를 참고하실 수 있습니다.
-
-```shell
-pnpm example start
 ```
 
 ---
