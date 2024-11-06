@@ -1,6 +1,6 @@
 {
   "name": "@portone/react-native-sdk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "PortOne SDK for React Native",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
