@@ -176,4 +176,8 @@ export const appScheme: Record<string, AppScheme> = {
     ios: 'id839333328',
     android: 'viva.republica.toss',
   },
+  'naversearchthirdlogin': {
+    ios: 'id393499958',
+    android: 'com.nhn.android.search',
+  },
 }
