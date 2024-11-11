@@ -28,6 +28,15 @@ expo install @portone/react-native-sdk react-native-webview
 }
 ```
 
+3. `tsconfig.json`에 다음 항목을 추가 혹은 수정합니다.
+
+```json
+"compilerOptions": {
+  "module": "NodeNext",
+  "moduleResolution": "NodeNext"
+}
+```
+
 ## 사용법
 
 ```js
