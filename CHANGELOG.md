@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.1.6
+
+### Patch Changes
+
+- 7ec9950: 카카오페이 appScheme 추가
+
 ## 0.1.5
 
 ### Patch Changes
