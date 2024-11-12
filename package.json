@@ -39,7 +39,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "typecheck": "tsc -p ./tsconfig.build.json",
+    "typecheck": "tsc -p ./tsconfig.json",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build"
@@ -75,6 +75,7 @@
     "@commitlint/config-conventional": "^17.8.1",
     "@evilmartians/lefthook": "^1.8.2",
     "@expo/config-plugins": "^8.0.10",
+    "@portone/browser-sdk": "^0.0.10",
     "@react-native/eslint-config": "^0.73.2",
     "@types/jest": "^29.5.14",
     "@types/react": "^18.3.12",
@@ -166,7 +167,7 @@
       [
         "typescript",
         {
-          "project": "tsconfig.build.json",
+          "project": "tsconfig.json",
           "esm": true
         }
       ]
@@ -175,10 +176,5 @@
   "create-react-native-library": {
     "type": "library",
     "version": "0.41.0"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.26.0",
-    "@portone/browser-sdk": "^0.0.10",
-    "react-native-webview": "~13.8.7"
   }
 }

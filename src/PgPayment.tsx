@@ -2,7 +2,7 @@ import type {
   LoadPaymentUIRequest,
   PaymentResponse,
 } from '@portone/browser-sdk/v2'
-import { SdkUIDelegate, type SdkDelegateProps } from './SdkDelegate'
+import { type SdkDelegateProps, SdkUIDelegate } from './SdkDelegate'
 
 export type PgPaymentProps = Omit<
   SdkDelegateProps<LoadPaymentUIRequest, PaymentResponse>,

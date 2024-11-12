@@ -4,7 +4,8 @@ React Native 환경에서 포트원 V2 결제 시스템에 연동하기 위한 S
 
 ## 의존성
 
-Node.js v18을 지원하며, Expo 51.0.38과 react-native-webview 13.8.6 환경에서 테스트되었습니다.
+Node.js v18을 지원하며, Expo 51.0.38과 react-native-webview 13.8.6 환경에서
+테스트되었습니다.
 
 ## 기술 지원
 
@@ -12,7 +13,8 @@ Node.js v18을 지원하며, Expo 51.0.38과 react-native-webview 13.8.6 환경�
 
 ## 설치
 
-1. Expo CLI를 사용해 @portone/react-native-sdk와 react-native-webview를 설치합니다.
+1. Expo CLI를 사용해 @portone/react-native-sdk와 react-native-webview를
+   설치합니다.
 
 ```shell
 expo install @portone/react-native-sdk react-native-webview
@@ -54,11 +56,12 @@ import {
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Made with
+[create-react-native-library](https://github.com/callstack/react-native-builder-bob)
 
-Packages under _portone-io/react-native-sdk_ are primarily distributed under the terms of
-both the [Apache License (Version 2.0)] and the [MIT license]. See [COPYRIGHT]
-for details.
+Packages under _portone-io/react-native-sdk_ are primarily distributed under the
+terms of both the [Apache License (Version 2.0)] and the [MIT license]. See
+[COPYRIGHT] for details.
 
 [MIT license]: LICENSE-MIT
 [Apache License (Version 2.0)]: LICENSE-APACHE

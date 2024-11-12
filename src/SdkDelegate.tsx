@@ -18,8 +18,9 @@ function onMessage(
   onError?: (error: Error) => void
 ) {
   const data = JSON.parse(message.nativeEvent.data)
-  if ('error' in data)
+  if ('error' in data) {
     onError?.(new Error(data.error.message, { cause: data.error }))
+  }
 }
 
 function onShouldStartLoadWithRequest<Response>(
@@ -105,7 +106,10 @@ export function SdkUIDelegate<Request extends { uiType: string }, Response>({
         uri: `https://portone-io.github.io/react-native-sdk/SdkUIDelegate.html?method=${method}&uiType=${request.uiType}`,
       }}
       injectedJavaScriptObject={
-        { ...request, redirectUrl: 'portone://blank' } as object
+        {
+          ...request,
+          redirectUrl: 'portone://blank',
+        } as object
       }
       onMessage={(event) => onMessage(event, onError)}
       onShouldStartLoadWithRequest={(event) =>

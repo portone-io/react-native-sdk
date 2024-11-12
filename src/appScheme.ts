@@ -180,4 +180,8 @@ export const appScheme: Record<string, AppScheme> = {
     ios: 'id393499958',
     android: 'com.nhn.android.search',
   },
+  'kakaobank': {
+    ios: 'id1258016944',
+    android: 'com.kakaobank.channel',
+  },
 }
