@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.3.0
+
+### Minor Changes
+
+- 4f2ad27: ref로 PortoneController 노출
+
 ## 0.2.0
 
 ### Minor Changes
