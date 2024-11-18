@@ -23,3 +23,11 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send a Slack notification if a publish happens
+        if: ${{ steps.changesets.outputs.hasChangesets == 'false' }}
+        run: |
+          export VERSION=$(jq -r '.version' package.json)
+          curl -X POST -H 'Content-type: application/json'\
+            --data '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"npm에 `@portone/react-native-sdk` 버전 *v'"$VERSION"'* 가 배포되었습니다 :rocket:"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"npm 페이지 보기"},"value":"show_npm_page","url":"https://www.npmjs.com/package/@portone/react-native-sdk/v/'"$VERSION"'","action_id":"show_npm_page"},{"type":"button","text":{"type":"plain_text","text":"체인지로그 보기"},"value":"show_changelog","url":"https://github.com/portone-io/react-native-sdk/blob/main/CHANGELOG.md","action_id":"show_changelog"}]}]}'\
+            ${{ secrets.SLACK_WEBHOOK_URL }}

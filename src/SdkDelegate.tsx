@@ -1,3 +1,4 @@
+import type React from 'react'
 import { Linking, Platform } from 'react-native'
 import WebView from 'react-native-webview'
 import type {
@@ -11,6 +12,7 @@ export type SdkDelegateProps<Request, Response> = {
   request: Omit<Request, 'requestUrl'>
   onError?: (error: Error) => void
   onComplete?: (response: Response) => void
+  ref?: React.RefObject<WebView>
 }
 
 function onMessage(
@@ -77,9 +79,11 @@ export function SdkDelegate<Request extends object, Response>({
   request,
   onError,
   onComplete,
+  ref,
 }: SdkDelegateProps<Request, Response>) {
   return (
     <WebView
+      ref={ref}
       originWhitelist={['*']}
       source={{
         uri: `https://portone-io.github.io/react-native-sdk/SdkDelegate.html?method=${method}`,
@@ -98,9 +102,11 @@ export function SdkUIDelegate<Request extends { uiType: string }, Response>({
   request,
   onError,
   onComplete,
+  ref,
 }: SdkDelegateProps<Request, Response>) {
   return (
     <WebView
+      ref={ref}
       originWhitelist={['*']}
       source={{
         uri: `https://portone-io.github.io/react-native-sdk/SdkUIDelegate.html?method=${method}&uiType=${request.uiType}`,
