@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.3.1
+
+### Patch Changes
+
+- 49a365e: browser-sdk 업데이트
+
 ## 0.3.0
 
 ### Minor Changes
