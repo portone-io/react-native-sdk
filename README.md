@@ -20,7 +20,13 @@ Node.js v18을 지원하며, Expo 51.0.38과 react-native-webview 13.8.6 환경�
 expo install @portone/react-native-sdk react-native-webview
 ```
 
-2. app.json의 plugin 항목으로 `@portone/react-native-sdk/plugin`를 추가합니다.
+2. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에 추가합니다.
+
+```shell
+npm install --save-dev @portone/browser-sdk
+```
+
+3. app.json의 plugin 항목으로 `@portone/react-native-sdk/plugin`를 추가합니다.
 
 ```json
 {
@@ -30,7 +36,7 @@ expo install @portone/react-native-sdk react-native-webview
 }
 ```
 
-3. `tsconfig.json`에 다음 항목을 추가 혹은 수정합니다.
+4. TypeScript를 사용하시는 경우 `tsconfig.json`에 다음 항목을 추가 혹은 수정합니다.
 
 ```json
 "compilerOptions": {
