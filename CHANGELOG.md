@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.3.2
+
+### Patch Changes
+
+- 024302d: 의존성 업데이트
+
 ## 0.3.1
 
 ### Patch Changes
