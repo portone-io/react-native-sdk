@@ -1,4 +1,3 @@
-import type React from 'react'
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Linking, Platform } from 'react-native'
 import { WebView } from 'react-native-webview'
@@ -24,6 +23,7 @@ export type SdkDelegateProps<Request, Response> = {
   onError?: (error: Error) => void
   onComplete?: (response: Response) => void
   ref?: React.LegacyRef<PortOneController>
+  webviewDebuggingEnabled?: boolean
 }
 
 export type SdkUIDelegateProps<Request, Response> = {
@@ -31,6 +31,7 @@ export type SdkUIDelegateProps<Request, Response> = {
   onError?: (error: Error) => void
   onComplete?: (response: Response) => void
   ref?: React.LegacyRef<PortOneUIController<Request>>
+  webviewDebuggingEnabled?: boolean
 }
 
 export type SdkDelegate<Request, Response> = React.FC<
@@ -46,7 +47,7 @@ function onMessage(
 ) {
   const data = JSON.parse(message.nativeEvent.data)
   if ('error' in data) {
-    onError?.(new Error(data.error.message, { cause: data.error }))
+    onError?.(new Error(data.error.message))
   }
 }
 
@@ -62,8 +63,17 @@ function onShouldStartLoadWithRequest<Response>(
     case 'https':
       return true
     case 'portone': {
-      const { searchParams } = new URL(url)
-      onComplete?.(Object.fromEntries(searchParams.entries()) as Response)
+      const [, search] = url.split('?', 2)
+      const args =
+        search?.split('&')?.flatMap((param) => {
+          const [key, value] = param.split('=', 2)
+          if (key != null && value != null) {
+            return [[key, value]]
+          } else {
+            return []
+          }
+        }) ?? []
+      onComplete?.(Object.fromEntries(args) as Response)
       return false
     }
     case 'intent': {
@@ -103,7 +113,7 @@ export function createSdkDelegate<Request extends object, Response>(
   method: string
 ): React.FC<SdkDelegateProps<Request, Response>> {
   return forwardRef<PortOneController, SdkDelegateProps<Request, Response>>(
-    ({ request, onError, onComplete }, ref) => {
+    ({ request, onError, onComplete, webviewDebuggingEnabled }, ref) => {
       const [canGoBack, setCanGoBack] = useState(false)
       const webview = useRef<WebView>(null)
       useImperativeHandle(ref, () => ({
@@ -131,6 +141,8 @@ export function createSdkDelegate<Request extends object, Response>(
           }
           onLoadProgress={(event) => setCanGoBack(event.nativeEvent.canGoBack)}
           allowsBackForwardNavigationGestures
+          webviewDebuggingEnabled={webviewDebuggingEnabled}
+          javaScriptEnabled
         />
       )
     }
@@ -144,7 +156,7 @@ export function createSdkUIDelegate<
   return forwardRef<
     PortOneUIController<Request>,
     SdkUIDelegateProps<Request, Response>
-  >(({ request, onError, onComplete }, ref) => {
+  >(({ request, onError, onComplete, webviewDebuggingEnabled }, ref) => {
     const [canGoBack, setCanGoBack] = useState(false)
     const webview = useRef<WebView>(null)
     useImperativeHandle(ref, () => ({
@@ -179,6 +191,8 @@ export function createSdkUIDelegate<
         }
         onLoadProgress={(event) => setCanGoBack(event.nativeEvent.canGoBack)}
         allowsBackForwardNavigationGestures
+        webviewDebuggingEnabled={webviewDebuggingEnabled}
+        javaScriptEnabled
       />
     )
   })

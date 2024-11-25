@@ -36,6 +36,9 @@ importers:
       '@react-native/eslint-config':
         specifier: ^0.73.2
         version: 0.73.2(eslint@8.57.1)(jest@29.7.0(@types/node@22.9.1))(prettier@3.3.3)(typescript@5.6.3)
+      '@react-native/typescript-config':
+        specifier: ^0.76.3
+        version: 0.76.3
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1383,6 +1386,9 @@ packages:
 
   '@react-native/normalize-colors@0.76.2':
     resolution: {integrity: sha512-ICoOpaTLPsFQjNLSM00NgQr6wal300cZZonHVSDXKntX+BfkLeuCHRtr/Mn+klTtW+/1v2/2FRm9dXjvyGf9Dw==}
+
+  '@react-native/typescript-config@0.76.3':
+    resolution: {integrity: sha512-7R4b3jB+0JXVOV5nQHZF6HwO3Dhy2EvOne+gPPrjxjfhy0o7453xKq/oGrmuy7tKlCJXf9A4YRvcCHucLRZA/w==}
 
   '@react-native/virtualized-lists@0.74.88':
     resolution: {integrity: sha512-nZn4X9zuyinRJoE/WcgB1e/X6b3J3QPRSsNC0LOjHzP97tvW6xvBacjbCAJAaZQwD9KaqZyK86eCi61ksr350g==}
@@ -7556,6 +7562,8 @@ snapshots:
   '@react-native/normalize-colors@0.74.88': {}
 
   '@react-native/normalize-colors@0.76.2': {}
+
+  '@react-native/typescript-config@0.76.3': {}
 
   '@react-native/virtualized-lists@0.74.88(@types/react@18.3.12)(react-native@0.74.6(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.2.0))(react@18.2.0)':
     dependencies:

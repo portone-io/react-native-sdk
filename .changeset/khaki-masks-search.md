@@ -2,4 +2,4 @@
 '@portone/react-native-sdk': patch
 ---
 
-placeholder
+URLSearchParams를 사용하지 않도록 수정
