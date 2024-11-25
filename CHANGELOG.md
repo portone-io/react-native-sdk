@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.3.3
+
+### Patch Changes
+
+- 1362c02: URLSearchParams를 사용하지 않도록 수정
+
 ## 0.3.2
 
 ### Patch Changes
