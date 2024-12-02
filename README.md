@@ -17,13 +17,17 @@ Node.js v18을 지원하며, Expo 51.0.38과 react-native-webview 13.8.6 환경�
    설치합니다.
 
 ```shell
-expo install @portone/react-native-sdk react-native-webview
+npx expo install @portone/react-native-sdk react-native-webview
 ```
 
 2. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에 추가합니다.
 
 ```shell
 npm install --save-dev @portone/browser-sdk
+```
+또는
+```shell
+yarn add -D @portone/browser-sdk
 ```
 
 3. app.json의 plugin 항목으로 `@portone/react-native-sdk/plugin`를 추가합니다.
