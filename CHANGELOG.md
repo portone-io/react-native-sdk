@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.3.4
+
+### Patch Changes
+
+- 7b0dccb: request 타입 정정
+
 ## 0.3.3
 
 ### Patch Changes
