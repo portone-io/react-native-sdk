@@ -7,6 +7,10 @@ import type {
 } from 'react-native-webview/lib/WebViewTypes'
 import { appScheme } from './appScheme'
 
+type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never
+
 export type PortOneController = {
   readonly webview: WebView | null
   readonly canGoBack: boolean
@@ -19,7 +23,7 @@ export type PortOneUIController<Request> = {
 }
 
 export type SdkDelegateProps<Request, Response> = {
-  request: Omit<Request, 'requestUrl'>
+  request: DistributiveOmit<Request, 'requestUrl'>
   onError?: (error: Error) => void
   onComplete?: (response: Response) => void
   ref?: React.LegacyRef<PortOneController>
@@ -27,7 +31,7 @@ export type SdkDelegateProps<Request, Response> = {
 }
 
 export type SdkUIDelegateProps<Request, Response> = {
-  request: Omit<Request, 'requestUrl'>
+  request: DistributiveOmit<Request, 'requestUrl'>
   onError?: (error: Error) => void
   onComplete?: (response: Response) => void
   ref?: React.LegacyRef<PortOneUIController<Request>>
