@@ -64,7 +64,7 @@ import {
 <Payment request={/* ... */} />
 ```
 
-세부 사용법 예제는 포트원의 [react native expo 예제](https://github.com/portone-io/portone-sample/blob/main/react-native-expo/App.tsx)를 참조해주세요
+세부 사용법과 관련하여 [React Native Expo 포트원 샘플 프로젝트](https://github.com/portone-io/portone-sample/tree/main/react-native-expo)를 참고하실 수 있습니다.
 
 ---
 
