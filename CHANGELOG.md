@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.3.5
+
+### Patch Changes
+
+- 0a24661: 일부 플랫폼에서 결제창이 로딩되지 않던 버그 수정
+
 ## 0.3.4
 
 ### Patch Changes
