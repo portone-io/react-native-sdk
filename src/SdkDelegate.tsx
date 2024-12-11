@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Linking, Platform } from 'react-native'
 import { WebView } from 'react-native-webview'
 import type {
@@ -128,6 +128,10 @@ export function createSdkDelegate<Request extends object, Response>(
           return canGoBack
         },
       }))
+      const requestObject = {
+        ...request,
+        redirectUrl: 'portone://blank',
+      }
       return (
         <WebView
           ref={webview}
@@ -135,10 +139,8 @@ export function createSdkDelegate<Request extends object, Response>(
           source={{
             uri: `https://portone-io.github.io/react-native-sdk/SdkDelegate.html?method=${method}`,
           }}
-          injectedJavaScriptObject={{
-            ...request,
-            redirectUrl: 'portone://blank',
-          }}
+          injectedJavaScript={`window.requestObject=${JSON.stringify(requestObject)}`}
+          injectedJavaScriptObject={requestObject}
           onMessage={(event) => onMessage(event, onError)}
           onShouldStartLoadWithRequest={(event) =>
             onShouldStartLoadWithRequest(event, onComplete)
@@ -176,6 +178,10 @@ export function createSdkUIDelegate<
         )
       },
     }))
+    const requestObject = {
+      ...request,
+      redirectUrl: 'portone://blank',
+    }
     return (
       <WebView
         ref={webview}
@@ -183,12 +189,8 @@ export function createSdkUIDelegate<
         source={{
           uri: `https://portone-io.github.io/react-native-sdk/SdkUIDelegate.html?method=${method}&uiType=${request.uiType}`,
         }}
-        injectedJavaScriptObject={
-          {
-            ...request,
-            redirectUrl: 'portone://blank',
-          } as object
-        }
+        injectedJavaScript={`window.requestObject=${JSON.stringify(requestObject)}`}
+        injectedJavaScriptObject={requestObject}
         onMessage={(event) => onMessage(event, onError)}
         onShouldStartLoadWithRequest={(event) =>
           onShouldStartLoadWithRequest(event, onComplete)

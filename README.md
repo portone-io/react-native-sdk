@@ -11,7 +11,7 @@ Node.js v18을 지원하며, Expo 51.0.38과 react-native-webview 13.8.6 환경�
 
 - tech.support@portone.io
 
-## 설치
+## 설치 (Expo 사용)
 
 1. Expo CLI를 사용해 @portone/react-native-sdk와 react-native-webview를
    설치합니다.
@@ -24,9 +24,6 @@ npx expo install @portone/react-native-sdk react-native-webview
 
 ```shell
 npm install --save-dev @portone/browser-sdk
-```
-또는
-```shell
 yarn add -D @portone/browser-sdk
 ```
 
@@ -49,6 +46,134 @@ yarn add -D @portone/browser-sdk
 }
 ```
 
+## 설치 (Expo 미사용)
+
+1. @portone/react-native-sdk와 react-native-webview를
+   설치합니다.
+
+```shell
+npm install --save @portone/react-native-sdk react-native-webview
+yarn add @portone/react-native-sdk react-native-webview
+```
+
+2. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에 추가합니다.
+
+```shell
+npm install --save-dev @portone/browser-sdk
+yarn add -D @portone/browser-sdk
+```
+
+3. TypeScript를 사용하시는 경우 `tsconfig.json`에 다음 항목을 추가 혹은 수정합니다.
+
+```json
+"compilerOptions": {
+  "module": "NodeNext",
+  "moduleResolution": "NodeNext"
+}
+```
+
+4. 앱 링크를 사용하기 위해 android/app/src/main/AndroidManifest.xml 파일에 아래 내용을 추가합니다.
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- 중략 -->
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <data android:scheme="https" />
+    </intent>
+  </queries>
+  <queries>
+    <package android:name="com.kftc.bankpay.android" />
+    <package android:name="kvp.jjy.MispAndroid320" />
+    <package android:name="com.hyundaicard.appcard" />
+    <package android:name="com.shcard.smartpay" />
+    <package android:name="com.shinhan.smartcaremgr" />
+    <package android:name="com.kbcard.cxh.appcard" />
+    <package android:name="com.kbstar.kbbank" />
+    <package android:name="com.kbstar.reboot" />
+    <package android:name="kr.co.samsungcard.mpocket" />
+    <package android:name="kr.co.shiftworks.vguardweb" />
+    <package android:name="net.ib.android.smcard" />
+    <package android:name="com.lcacApp" />
+    <package android:name="com.lottemembers.android" />
+    <package android:name="com.hanaskcard.paycla" />
+    <package android:name="nh.smart.card" />
+    <package android:name="nh.smart.nhallonepay" />
+    <package android:name="kr.co.citibank.citimobile" />
+    <package android:name="com.kakao.talk" />
+    <package android:name="com.nhnent.payapp" />
+    <package android:name="com.wooricard.smartapp" />
+    <package android:name="com.wooribank.smart.npib" />
+    <package android:name="viva.republica.toss" />
+    <package android:name="com.nhn.android.search" />
+    <package android:name="com.kakaobank.channel" />
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <data android:scheme="https" />
+    </intent>
+  </queries>
+</manifest>
+```
+
+5. 앱 링크를 사용하기 위해 ios/(프로젝트 이름)/Info.plist 파일에 아래 내용을 추가합니다.
+
+```xml
+<dict>
+  <!-- 중략 -->
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>kftc-bankpay</string>
+    <string>ispmobile</string>
+    <string>hdcardappcardansimclick</string>
+    <string>smhyundaiansimclick</string>
+    <string>hyundaicardappcardid</string>
+    <string>shinhan-sr-ansimclick</string>
+    <string>shinhan-sr-ansimclick-naverpay</string>
+    <string>shinhan-sr-ansimclick-payco</string>
+    <string>shinhan-sr-ansimclick-lpay</string>
+    <string>shinhan-sr-ansimclick-mola</string>
+    <string>smshinhanansimclick</string>
+    <string>smailapp</string>
+    <string>kb-acp</string>
+    <string>kb-auth</string>
+    <string>kb-screen</string>
+    <string>kbbank</string>
+    <string>liivbank</string>
+    <string>newliiv</string>
+    <string>mpocket.online.ansimclick</string>
+    <string>ansimclickscard</string>
+    <string>ansimclickipcollect</string>
+    <string>vguardstart</string>
+    <string>samsungpay</string>
+    <string>scardcertiapp</string>
+    <string>monimopay</string>
+    <string>monimopayauth</string>
+    <string>lottesmartpay</string>
+    <string>lotteappcard</string>
+    <string>lmslpay</string>
+    <string>lpayapp</string>
+    <string>cloudpay</string>
+    <string>hanawalletmembers</string>
+    <string>nhappcardansimclick</string>
+    <string>nonghyupcardansimclick</string>
+    <string>nhallonepayansimclick</string>
+    <string>citispay</string>
+    <string>citicardappkr</string>
+    <string>citimobileapp</string>
+    <string>kakaotalk</string>
+    <string>payco</string>
+    <string>com.wooricard.wcard</string>
+    <string>newsmartpib</string>
+    <string>supertoss</string>
+    <string>naversearchthirdlogin</string>
+    <string>kakaobank</string>
+  </array>
+</dict>
+```
+
 ## 사용법
 
 ```js
@@ -64,7 +189,7 @@ import {
 <Payment request={/* ... */} />
 ```
 
-세부 사용법과 관련하여 [React Native Expo 포트원 샘플 프로젝트](https://github.com/portone-io/portone-sample/tree/main/react-native-expo)를 참고하실 수 있습니다.
+세부 사용법과 관련하여 [React Native 포트원 샘플 프로젝트](https://github.com/portone-io/portone-sample/tree/main/react-native) 및 [React Native Expo 포트원 샘플 프로젝트](https://github.com/portone-io/portone-sample/tree/main/react-native-expo)를 참고하실 수 있습니다.
 
 ---
 
