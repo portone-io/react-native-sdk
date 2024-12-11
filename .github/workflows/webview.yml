@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - webview
+      - ".github/workflows/webview.yml"
+      - "webview/**"
 
 permissions:
   contents: read
