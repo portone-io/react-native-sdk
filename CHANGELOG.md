@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.3.6
+
+### Patch Changes
+
+- 4de7219: placeholder
+
 ## 0.3.5
 
 ### Patch Changes
