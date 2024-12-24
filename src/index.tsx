@@ -17,7 +17,7 @@ import {
   type SdkUIDelegate,
 } from './SdkDelegate'
 
-export const PgPayment: SdkUIDelegate<LoadPaymentUIRequest, PaymentResponse> =
+export const PaymentUI: SdkUIDelegate<LoadPaymentUIRequest, PaymentResponse> =
   createSdkUIDelegate<LoadPaymentUIRequest, PaymentResponse>('loadPaymentUI')
 
 export const PgIssueBilingKey: SdkUIDelegate<
