@@ -182,8 +182,8 @@ import {
   IssueBillingKey,
   IssueBillingKeyAndPay,
   Payment,
-  PgIssueBillingKey,
-  PgPayment,
+  IssueBillingKeyUI,
+  PaymentUI,
 } from '@portone/react-native-sdk'
 
 <Payment request={/* ... */} />
