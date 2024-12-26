@@ -91,7 +91,7 @@ function onShouldStartLoadWithRequest<Response>(
         search?.split('&')?.flatMap((param) => {
           const [key, value] = param.split('=', 2)
           if (key != null && value != null) {
-            return [[key, decodeURIComponent(value)]]
+            return [[decodeURIComponent(key), decodeURIComponent(value)]]
           } else {
             return []
           }
@@ -105,7 +105,7 @@ function onShouldStartLoadWithRequest<Response>(
       for (const param of hash!.split(';')) {
         const [key, value] = param.split('=', 2)
         if (key != null && value != null) {
-          params.set(key, decodeURIComponent(value))
+          params.set(decodeURIComponent(key), decodeURIComponent(value))
         }
       }
       const packageName = params.get('package')
