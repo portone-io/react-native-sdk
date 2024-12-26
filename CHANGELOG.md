@@ -1,5 +1,16 @@
 # @portone/react-native-sdk
 
+## 0.4.0
+
+### Minor Changes
+
+- 4de7219: \* embed content HTML
+  - rename PgPayment to PaymentUI
+  - fix: pass PaymentUI response via postMessage
+- a597a07: \* bypass WebView props
+  - fix: decode URL components in success response
+  - fix: eslint warning message (#23)
+
 ## 0.3.5
 
 ### Patch Changes
