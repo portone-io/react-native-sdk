@@ -102,8 +102,7 @@ function onShouldStartLoadWithRequest<Response>(
       for (const param of hash!.split(';')) {
         const [key, value] = param.split('=', 2)
         if (key != null && value != null) {
-          // value is already url encoded
-          params.set(key, value)
+          params.set(key, decodeURIComponent(value))
         }
       }
       const packageName = params.get('package')
