@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.4.0-alpha.1
+
+### Patch Changes
+
+- 1a05b81: fix: decode URI component in url
+
 ## 0.4.0-alpha.0
 
 ### Minor Changes
