@@ -24,6 +24,9 @@ export type PortOneUIController<Request> = {
 
 type OverridableWebViewProps = Omit<
   WebViewProps,
+  | 'request'
+  | 'onError'
+  | 'onComplete'
   | 'ref'
   | 'source'
   | 'injectedJavaScript'
@@ -44,18 +47,18 @@ export type SdkDelegateProps<Request, Response> = {
   ref?: React.LegacyRef<PortOneController>
 } & OverridableWebViewProps
 
-export type SdkUIDelegateProps<Request, Response> = {
+export type SdkUIDelegateProps<Request, Response, Controller> = {
   request: DistributiveOmit<Request, 'requestUrl'>
   onError?: (error: Error) => void
   onComplete?: (response: Response) => void
-  ref?: React.LegacyRef<PortOneUIController<Request>>
+  ref?: React.LegacyRef<Controller>
 } & OverridableWebViewProps
 
 export type SdkDelegate<Request, Response> = React.FC<
   SdkDelegateProps<Request, Response>
 >
-export type SdkUIDelegate<Request, Response> = React.FC<
-  SdkUIDelegateProps<Request, Response>
+export type SdkUIDelegate<Request, Response, Controller> = React.FC<
+  SdkUIDelegateProps<Request, Response, Controller>
 >
 
 function onMessage<Response>(
@@ -129,7 +132,7 @@ function onShouldStartLoadWithRequest<Response>(
   }
 }
 
-function sdkDelegateHtml(method: string): string {
+function sdkDelegateHtml(method: string, requestObject: object): string {
   return `<!doctype html>
 <html>
 <head>
@@ -140,7 +143,7 @@ function sdkDelegateHtml(method: string): string {
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const request = window.requestObject ?? JSON.parse(window.ReactNativeWebView.injectedObjectJson())
-    PortOne[${JSON.stringify(method)}](request).catch((e) => {
+    PortOne[${JSON.stringify(method)}](${JSON.stringify(requestObject)}).catch((e) => {
       const error = e instanceof Error ? { ...e, message: e.message } : e
       window.ReactNativeWebView.postMessage(JSON.stringify({ error }))
     })
@@ -156,7 +159,17 @@ export function createSdkDelegate<Request extends object, Response>(
   method: string
 ): React.FC<SdkDelegateProps<Request, Response>> {
   return forwardRef<PortOneController, SdkDelegateProps<Request, Response>>(
-    ({ request, onError, onComplete, allowsBackForwardNavigationGestures, originWhitelist, ...props }, ref) => {
+    (
+      {
+        request,
+        onError,
+        onComplete,
+        allowsBackForwardNavigationGestures,
+        originWhitelist,
+        ...props
+      },
+      ref
+    ) => {
       const [canGoBack, setCanGoBack] = useState(false)
       const webview = useRef<WebView>(null)
       useImperativeHandle(ref, () => ({
@@ -177,17 +190,17 @@ export function createSdkDelegate<Request extends object, Response>(
           ref={webview}
           originWhitelist={originWhitelist ?? ['*']}
           source={{
-            html: sdkDelegateHtml(method),
+            html: sdkDelegateHtml(method, requestObject),
             baseUrl: 'https://react-native-sdk-content.portone.io/',
           }}
-          injectedJavaScript={`window.requestObject=${JSON.stringify(requestObject)}`}
-          injectedJavaScriptObject={requestObject}
           onMessage={(event) => onMessage(event, onError, onComplete)}
           onShouldStartLoadWithRequest={(event) =>
             onShouldStartLoadWithRequest(event, onComplete)
           }
           onLoadProgress={(event) => setCanGoBack(event.nativeEvent.canGoBack)}
-          allowsBackForwardNavigationGestures={allowsBackForwardNavigationGestures ?? true}
+          allowsBackForwardNavigationGestures={
+            allowsBackForwardNavigationGestures ?? true
+          }
           javaScriptEnabled
         />
       )
@@ -195,7 +208,7 @@ export function createSdkDelegate<Request extends object, Response>(
   )
 }
 
-function sdkUIDelegateHtml(method: string, uiType: string): string {
+function sdkUIDelegateHtml(method: string, uiType: string, requestObject: object): string {
   return `<!doctype html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -223,12 +236,11 @@ function sdkUIDelegateHtml(method: string, uiType: string): string {
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const request = window.requestObject ?? JSON.parse(window.ReactNativeWebView.injectedObjectJson())
     document
       .getElementById('portone-ui-container')
       .setAttribute('data-portone-ui-type', ${JSON.stringify(uiType)})
     PortOne[${JSON.stringify(method)}](
-      request,
+      ${JSON.stringify(requestObject)},
       {
         onPaymentSuccess: (response) => window.ReactNativeWebView.postMessage(JSON.stringify({ response })),
         onPaymentFail: (error) => window.ReactNativeWebView.postMessage(JSON.stringify({ response: error })),
@@ -246,51 +258,67 @@ function sdkUIDelegateHtml(method: string, uiType: string): string {
 export function createSdkUIDelegate<
   Request extends { uiType: string },
   Response,
->(method: string): React.FC<SdkUIDelegateProps<Request, Response>> {
+>(
+  method: string
+): React.FC<
+  SdkUIDelegateProps<Request, Response, PortOneUIController<Request>>
+> {
   return forwardRef<
     PortOneUIController<Request>,
-    SdkUIDelegateProps<Request, Response>
-  >(({ request, onError, onComplete, originWhitelist, allowsBackForwardNavigationGestures, ...props }, ref) => {
-    const [canGoBack, setCanGoBack] = useState(false)
-    const webview = useRef<WebView>(null)
-    useImperativeHandle(ref, () => ({
-      get webview() {
-        return webview.current
+    SdkUIDelegateProps<Request, Response, PortOneUIController<Request>>
+  >(
+    (
+      {
+        request,
+        onError,
+        onComplete,
+        originWhitelist,
+        allowsBackForwardNavigationGestures,
+        ...props
       },
-      get canGoBack() {
-        return canGoBack
-      },
-      updateRequest(newRequest: Request) {
-        webview.current?.injectJavaScript(
-          `PortOne.updateLoadPaymentUIRequest(${JSON.stringify(newRequest)});`
-        )
-      },
-    }))
-    const requestObject = {
-      ...request,
-      redirectUrl: 'portone://blank',
+      ref
+    ) => {
+      const [canGoBack, setCanGoBack] = useState(false)
+      const webview = useRef<WebView>(null)
+      useImperativeHandle(ref, () => ({
+        get webview() {
+          return webview.current
+        },
+        get canGoBack() {
+          return canGoBack
+        },
+        updateRequest(newRequest: Request) {
+          webview.current?.injectJavaScript(
+            `PortOne.updateLoadPaymentUIRequest(${JSON.stringify(newRequest)});`
+          )
+        },
+      }))
+      const requestObject = {
+        ...request,
+        redirectUrl: 'portone://blank',
+      }
+      return (
+        <WebView
+          {...props}
+          ref={webview}
+          originWhitelist={originWhitelist ?? ['*']}
+          source={{
+            html: sdkUIDelegateHtml(method, request.uiType, requestObject),
+            baseUrl: 'https://react-native-sdk-content.portone.io/',
+          }}
+          onMessage={(event) => onMessage(event, onError, onComplete)}
+          onShouldStartLoadWithRequest={(event) =>
+            onShouldStartLoadWithRequest(event, onComplete)
+          }
+          onLoadProgress={(event) => setCanGoBack(event.nativeEvent.canGoBack)}
+          allowsBackForwardNavigationGestures={
+            allowsBackForwardNavigationGestures ?? true
+          }
+          javaScriptEnabled
+        />
+      )
     }
-    return (
-      <WebView
-        {...props}
-        ref={webview}
-        originWhitelist={originWhitelist ?? ['*']}
-        source={{
-          html: sdkUIDelegateHtml(method, request.uiType),
-          baseUrl: 'https://react-native-sdk-content.portone.io/',
-        }}
-        injectedJavaScript={`window.requestObject=${JSON.stringify(requestObject)}`}
-        injectedJavaScriptObject={requestObject}
-        onMessage={(event) => onMessage(event, onError, onComplete)}
-        onShouldStartLoadWithRequest={(event) =>
-          onShouldStartLoadWithRequest(event, onComplete)
-        }
-        onLoadProgress={(event) => setCanGoBack(event.nativeEvent.canGoBack)}
-        allowsBackForwardNavigationGestures={allowsBackForwardNavigationGestures ?? true}
-        javaScriptEnabled
-      />
-    )
-  })
+  )
 }
 
 async function marketIfFail(link: string, market: string) {

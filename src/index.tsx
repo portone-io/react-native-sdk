@@ -13,16 +13,24 @@ import type {
 import {
   createSdkDelegate,
   createSdkUIDelegate,
+  PortOneUIController,
   type SdkDelegate,
   type SdkUIDelegate,
 } from './SdkDelegate'
 
-export const PaymentUI: SdkUIDelegate<LoadPaymentUIRequest, PaymentResponse> =
-  createSdkUIDelegate<LoadPaymentUIRequest, PaymentResponse>('loadPaymentUI')
+export type PaymentUIController = PortOneUIController<LoadPaymentUIRequest>
+export const PaymentUI: SdkUIDelegate<
+  LoadPaymentUIRequest,
+  PaymentResponse,
+  PaymentUIController
+> = createSdkUIDelegate<LoadPaymentUIRequest, PaymentResponse>('loadPaymentUI')
 
-export const PgIssueBilingKey: SdkUIDelegate<
+export type IssueBillingKeyUIController =
+  PortOneUIController<LoadIssueBillingKeyUIRequest>
+export const IssueBilingKeyUI: SdkUIDelegate<
   LoadIssueBillingKeyUIRequest,
-  IssueBillingKeyResponse
+  IssueBillingKeyResponse,
+  IssueBillingKeyUIController
 > = createSdkUIDelegate<LoadIssueBillingKeyUIRequest, IssueBillingKeyResponse>(
   'loadIssueBillingKeyUI'
 )
@@ -53,4 +61,4 @@ export const IdentityVerification: SdkDelegate<
 export const Payment: SdkDelegate<PaymentRequest, PaymentResponse> =
   createSdkDelegate<PaymentRequest, PaymentResponse>('requestPayment')
 
-export type { PortOneController, PortOneUIController } from './SdkDelegate'
+export type { PortOneController } from './SdkDelegate'
