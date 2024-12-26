@@ -1,5 +1,7 @@
 ---
-'@portone/react-native-sdk': patch
+'@portone/react-native-sdk': minor
 ---
 
-placeholder
+* embed content HTML
+* rename PgPayment to PaymentUI
+* fix: pass PaymentUI response via postMessage

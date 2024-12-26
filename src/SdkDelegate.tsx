@@ -45,12 +45,15 @@ export type SdkUIDelegate<Request, Response> = React.FC<
   SdkUIDelegateProps<Request, Response>
 >
 
-function onMessage(
+function onMessage<Response>(
   message: WebViewMessageEvent,
-  onError?: (error: Error) => void
+  onError?: (error: Error) => void,
+  onComplete?: (response: Response) => void
 ) {
   const data = JSON.parse(message.nativeEvent.data)
-  if ('error' in data) {
+  if ('response' in data) {
+    onComplete?.(data.response)
+  } else if ('error' in data) {
     onError?.(new Error(data.error.message))
   }
 }
@@ -113,6 +116,30 @@ function onShouldStartLoadWithRequest<Response>(
   }
 }
 
+function sdkDelegateHtml(method: string): string {
+  return `<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+<script>
+  import * as PortOne from 'https://cdn.portone.io/v2/browser-sdk.esm.js'
+  document.addEventListener('DOMContentLoaded', () => {
+    const request = window.requestObject ?? JSON.parse(window.ReactNativeWebView.injectedObjectJson())
+    PortOne[${JSON.stringify(method)}](request).catch((e) => {
+      const error = e instanceof Error ? { ...e, message: e.message } : e
+      window.ReactNativeWebView.postMessage(JSON.stringify({ error }))
+    })
+  })
+</script>
+<body>
+</body>
+</html>
+`
+}
+
 export function createSdkDelegate<Request extends object, Response>(
   method: string
 ): React.FC<SdkDelegateProps<Request, Response>> {
@@ -137,11 +164,12 @@ export function createSdkDelegate<Request extends object, Response>(
           ref={webview}
           originWhitelist={['*']}
           source={{
-            uri: `https://portone-io.github.io/react-native-sdk/SdkDelegate.html?method=${method}`,
+            html: sdkDelegateHtml(method),
+            baseUrl: 'https://react-native-sdk-content.portone.io/',
           }}
           injectedJavaScript={`window.requestObject=${JSON.stringify(requestObject)}`}
           injectedJavaScriptObject={requestObject}
-          onMessage={(event) => onMessage(event, onError)}
+          onMessage={(event) => onMessage(event, onError, onComplete)}
           onShouldStartLoadWithRequest={(event) =>
             onShouldStartLoadWithRequest(event, onComplete)
           }
@@ -153,6 +181,54 @@ export function createSdkDelegate<Request extends object, Response>(
       )
     }
   )
+}
+
+function sdkUIDelegateHtml(method: string, uiType: string): string {
+  return `<!doctype html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+  }
+  .portone-ui-container {
+    flex: 1;
+  }
+  .portone-ui-container:has(#ui-container-paypal-spb) {
+    min-width: 75px;
+    max-width: 750px;
+  }
+</style>
+</head>
+<body>
+<div id="portone-ui-container" class="portone-ui-container"></div>
+<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const request = window.requestObject ?? JSON.parse(window.ReactNativeWebView.injectedObjectJson())
+    document
+      .getElementById('portone-ui-container')
+      .setAttribute('data-portone-ui-type', ${JSON.stringify(uiType)})
+    PortOne[${JSON.stringify(method)}](
+      request,
+      {
+        onPaymentSuccess: (response) => window.ReactNativeWebView.postMessage(JSON.stringify({ response })),
+        onPaymentFail: (error) => window.ReactNativeWebView.postMessage(JSON.stringify({ response: error })),
+      }
+    ).catch((e) => {
+      const error = e instanceof Error ? { ...e, message: e.message } : e
+      window.ReactNativeWebView.postMessage(JSON.stringify({ error }))
+    })
+  })
+</script>
+</body>
+`
 }
 
 export function createSdkUIDelegate<
@@ -187,11 +263,12 @@ export function createSdkUIDelegate<
         ref={webview}
         originWhitelist={['*']}
         source={{
-          uri: `https://portone-io.github.io/react-native-sdk/SdkUIDelegate.html?method=${method}&uiType=${request.uiType}`,
+          html: sdkUIDelegateHtml(method, request.uiType),
+          baseUrl: 'https://react-native-sdk-content.portone.io/',
         }}
         injectedJavaScript={`window.requestObject=${JSON.stringify(requestObject)}`}
         injectedJavaScriptObject={requestObject}
-        onMessage={(event) => onMessage(event, onError)}
+        onMessage={(event) => onMessage(event, onError, onComplete)}
         onShouldStartLoadWithRequest={(event) =>
           onShouldStartLoadWithRequest(event, onComplete)
         }
