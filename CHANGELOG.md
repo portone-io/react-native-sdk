@@ -1,5 +1,12 @@
 # @portone/react-native-sdk
 
+## 0.4.0-alpha.1
+
+### Patch Changes
+
+- ecdd4fd: sdkDelegate에서 항상 오류가 발생하는 문제 수정
+- 1a05b81: fix: decode URI component in url
+
 ## 0.4.0-alpha.0
 
 ### Minor Changes
