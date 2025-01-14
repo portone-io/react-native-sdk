@@ -142,7 +142,6 @@ function sdkDelegateHtml(method: string, requestObject: object): string {
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const request = window.requestObject ?? JSON.parse(window.ReactNativeWebView.injectedObjectJson())
     PortOne[${JSON.stringify(method)}](${JSON.stringify(requestObject)}).catch((e) => {
       const error = e instanceof Error ? { ...e, message: e.message } : e
       window.ReactNativeWebView.postMessage(JSON.stringify({ error }))

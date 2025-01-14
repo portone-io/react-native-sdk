@@ -56,14 +56,20 @@ npm install --save @portone/react-native-sdk react-native-webview
 yarn add @portone/react-native-sdk react-native-webview
 ```
 
-2. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에 추가합니다.
+2. ios 서브디렉토리에서 pod를 사용해 react-native-webview에 필요한 네이티브 의존성을 링킹힙니다.
+
+```sh
+pod install
+```
+
+3. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에 추가합니다.
 
 ```shell
 npm install --save-dev @portone/browser-sdk
 yarn add -D @portone/browser-sdk
 ```
 
-3. TypeScript를 사용하시는 경우 `tsconfig.json`에 다음 항목을 추가 혹은 수정합니다.
+4. TypeScript를 사용하시는 경우 `tsconfig.json`에 다음 항목을 추가 혹은 수정합니다.
 
 ```json
 "compilerOptions": {
@@ -72,7 +78,7 @@ yarn add -D @portone/browser-sdk
 }
 ```
 
-4. 앱 링크를 사용하기 위해 android/app/src/main/AndroidManifest.xml 파일에 아래 내용을 추가합니다.
+5. 앱 링크를 사용하기 위해 android/app/src/main/AndroidManifest.xml 파일에 아래 내용을 추가합니다.
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -118,7 +124,7 @@ yarn add -D @portone/browser-sdk
 </manifest>
 ```
 
-5. 앱 링크를 사용하기 위해 ios/(프로젝트 이름)/Info.plist 파일에 아래 내용을 추가합니다.
+6. 앱 링크를 사용하기 위해 ios/(프로젝트 이름)/Info.plist 파일에 아래 내용을 추가합니다.
 
 ```xml
 <dict>
