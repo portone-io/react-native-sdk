@@ -184,4 +184,8 @@ export const appScheme: Record<string, AppScheme> = {
     ios: 'id1258016944',
     android: 'com.kakaobank.channel',
   },
+  'v3mobileplusweb': {
+    ios: 'id1481938658',
+    android: 'com.ahnlab.v3mobileplus',
+  },
 }

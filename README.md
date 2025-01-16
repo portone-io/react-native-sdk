@@ -115,6 +115,7 @@ yarn add -D @portone/browser-sdk
     <package android:name="viva.republica.toss" />
     <package android:name="com.nhn.android.search" />
     <package android:name="com.kakaobank.channel" />
+    <package android:name="com.ahnlab.v3mobileplus" />
     <intent>
       <action android:name="android.intent.action.VIEW" />
       <category android:name="android.intent.category.BROWSABLE" />
@@ -176,6 +177,7 @@ yarn add -D @portone/browser-sdk
     <string>supertoss</string>
     <string>naversearchthirdlogin</string>
     <string>kakaobank</string>
+    <string>v3mobileplusweb</string>
   </array>
 </dict>
 ```
