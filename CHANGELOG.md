@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.4.0-alpha.2
+
+### Patch Changes
+
+- f2e8e97: V3 appScheme 추가
+
 ## 0.4.0-alpha.1
 
 ### Patch Changes
