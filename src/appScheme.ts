@@ -1,6 +1,6 @@
 export type AppScheme = {
-  ios: string
-  android: string
+  ios?: string
+  android?: string
 }
 
 export const appScheme: Record<string, AppScheme> = {
@@ -93,8 +93,7 @@ export const appScheme: Record<string, AppScheme> = {
     android: 'kr.co.shiftworks.vguardweb',
   },
   'samsungpay': {
-    ios: 'id535125356',
-    android: 'kr.co.samsungcard.mpocket',
+    android: 'com.samsung.android.spay',
   },
   'scardcertiapp': {
     ios: 'id535125356',

@@ -116,6 +116,7 @@ yarn add -D @portone/browser-sdk
     <package android:name="com.nhn.android.search" />
     <package android:name="com.kakaobank.channel" />
     <package android:name="com.ahnlab.v3mobileplus" />
+    <package android:name="com.samsung.android.spay" />
     <intent>
       <action android:name="android.intent.action.VIEW" />
       <category android:name="android.intent.category.BROWSABLE" />

@@ -1,9 +1,9 @@
-import { appScheme } from './appScheme'
 import {
   type ConfigPlugin,
   withAndroidManifest,
   withInfoPlist,
 } from '@expo/config-plugins'
+import { appScheme } from './appScheme'
 
 const packages = [
   ...new Set(Object.values(appScheme).map((scheme) => scheme.android)),
@@ -16,7 +16,7 @@ const withSdkQueries: ConfigPlugin = (config) => {
       queries: [
         ...androidManifest.modResults.manifest.queries,
         {
-          package: packages.map((name) => ({ $: { 'android:name': name } })),
+          package: packages.flatMap((name) => name === undefined ? [] : ({ $: { 'android:name': name } })),
           intent: [
             {
               action: [
