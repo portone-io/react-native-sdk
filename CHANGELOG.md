@@ -1,5 +1,12 @@
 # @portone/react-native-sdk
 
+## 0.4.0-alpha.3
+
+### Patch Changes
+
+- 10569fe: 외부 앱 등록 감지
+- 9b95279: 삼성페이 appScheme 추가
+
 ## 0.4.0-alpha.2
 
 ### Patch Changes
