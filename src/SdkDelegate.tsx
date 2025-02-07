@@ -207,7 +207,11 @@ export function createSdkDelegate<Request extends object, Response>(
   )
 }
 
-function sdkUIDelegateHtml(method: string, uiType: string, requestObject: object): string {
+function sdkUIDelegateHtml(
+  method: string,
+  uiType: string,
+  requestObject: object
+): string {
   return `<!doctype html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -321,6 +325,12 @@ export function createSdkUIDelegate<
 }
 
 async function marketIfFail(link: string, market: string) {
-  if (await Linking.canOpenURL(link)) return Linking.openURL(link)
+  try {
+    if (await Linking.canOpenURL(link)) return Linking.openURL(link)
+  } catch {
+    console.error(
+      '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
+    )
+  }
   return Linking.openURL(market)
 }
