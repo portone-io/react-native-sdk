@@ -100,12 +100,16 @@ function onShouldStartLoadWithRequest<Response>(
       return false
     }
     case 'intent': {
+      // https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/java/android/content/Intent.java
       const params = new Map<string, string>()
-      const [, hash] = url.split('#', 2)
-      for (const param of hash!.split(';')) {
-        const [key, value] = param.split('=', 2)
-        if (key != null && value != null) {
-          params.set(decodeURIComponent(key), decodeURIComponent(value))
+      const hashIndex = url.lastIndexOf('#')
+      if (hashIndex !== -1) {
+        for (const param of url.slice(hashIndex + 8).split(';')) {
+          if (param === 'end') break
+          const [key, value] = param.split('=', 2)
+          if (key != null && value != null) {
+            params.set(decodeURIComponent(key), decodeURIComponent(value))
+          }
         }
       }
       const packageName = params.get('package')
@@ -114,7 +118,7 @@ function onShouldStartLoadWithRequest<Response>(
         Object.entries(appScheme).find(
           ([, s]) => s.android === packageName
         )?.[0]
-      const redirectUrl = `${scheme}${url.slice(protocol.length)}`
+      const redirectUrl = `${scheme}${url.slice(protocol.length, hashIndex === -1 ? undefined : hashIndex)}`
       const playUrl = `market://details?id=${packageName}`
       marketIfFail(redirectUrl, playUrl)
       return false
