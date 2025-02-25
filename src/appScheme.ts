@@ -171,6 +171,10 @@ export const appScheme: Record<string, AppScheme> = {
     ios: 'id1470181651',
     android: 'com.wooribank.smart.npib',
   },
+  'NewSmartPib': {
+    ios: 'id1470181651',
+    android: 'com.wooribank.smart.npib',
+  },
   'supertoss': {
     ios: 'id839333328',
     android: 'viva.republica.toss',
@@ -186,5 +190,17 @@ export const appScheme: Record<string, AppScheme> = {
   'v3mobileplusweb': {
     ios: 'id1481938658',
     android: 'com.ahnlab.v3mobileplus',
+  },
+  'line': {
+    ios: 'id443904275',
+    android: 'jp.naver.line.android',
+  },
+  'alipays': {
+    ios: 'id333206289',
+    android: 'com.eg.android.AlipayGphone',
+  },
+  'weixin': {
+    ios: 'id414478124',
+    android: 'com.tencent.mm',
   },
 }

@@ -84,13 +84,6 @@ yarn add -D @portone/browser-sdk
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
   <!-- 중략 -->
   <queries>
-    <intent>
-      <action android:name="android.intent.action.VIEW" />
-      <category android:name="android.intent.category.BROWSABLE" />
-      <data android:scheme="https" />
-    </intent>
-  </queries>
-  <queries>
     <package android:name="com.kftc.bankpay.android" />
     <package android:name="kvp.jjy.MispAndroid320" />
     <package android:name="com.hyundaicard.appcard" />
@@ -117,6 +110,9 @@ yarn add -D @portone/browser-sdk
     <package android:name="com.kakaobank.channel" />
     <package android:name="com.ahnlab.v3mobileplus" />
     <package android:name="com.samsung.android.spay" />
+    <package android:name="jp.naver.line.android" />
+    <package android:name="com.eg.android.AlipayGphone" />
+    <package android:name="com.tencent.mm" />
     <intent>
       <action android:name="android.intent.action.VIEW" />
       <category android:name="android.intent.category.BROWSABLE" />
@@ -175,10 +171,14 @@ yarn add -D @portone/browser-sdk
     <string>payco</string>
     <string>com.wooricard.wcard</string>
     <string>newsmartpib</string>
+    <string>NewSmartPib</string>
     <string>supertoss</string>
     <string>naversearchthirdlogin</string>
     <string>kakaobank</string>
     <string>v3mobileplusweb</string>
+    <string>line</string>
+    <string>alipays</string>
+    <string>weixin</string>
   </array>
 </dict>
 ```
