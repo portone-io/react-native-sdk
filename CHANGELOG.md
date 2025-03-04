@@ -1,5 +1,16 @@
 # @portone/react-native-sdk
 
+## 0.4.0-alpha.4
+
+### Minor Changes
+
+- 862ef0e: IssueBillingKeyUI 버그 수정
+
+### Patch Changes
+
+- eb9804e: 페이북 결제 불가 오류 수정
+- 3a6fe27: 우리카드, 라인페이, 알리페이 플러스, 위챗 appScheme 추가
+
 ## 0.4.0-alpha.3
 
 ### Patch Changes
