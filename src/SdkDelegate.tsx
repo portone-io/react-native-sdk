@@ -214,7 +214,8 @@ export function createSdkDelegate<Request extends object, Response>(
 function sdkUIDelegateHtml(
   method: string,
   uiType: string,
-  requestObject: object
+  requestObject: object,
+  callbackPrefix: string,
 ): string {
   return `<!doctype html>
 <head>
@@ -249,8 +250,8 @@ function sdkUIDelegateHtml(
     PortOne[${JSON.stringify(method)}](
       ${JSON.stringify(requestObject)},
       {
-        onPaymentSuccess: (response) => window.ReactNativeWebView.postMessage(JSON.stringify({ response })),
-        onPaymentFail: (error) => window.ReactNativeWebView.postMessage(JSON.stringify({ response: error })),
+        on${callbackPrefix}Success: (response) => window.ReactNativeWebView.postMessage(JSON.stringify({ response })),
+        on${callbackPrefix}Fail: (error) => window.ReactNativeWebView.postMessage(JSON.stringify({ response: error })),
       }
     ).catch((e) => {
       const error = e instanceof Error ? { ...e, message: e.message } : e
@@ -266,7 +267,8 @@ export function createSdkUIDelegate<
   Request extends { uiType: string },
   Response,
 >(
-  method: string
+  method: string,
+  callbackPrefix: string,
 ): React.FC<
   SdkUIDelegateProps<Request, Response, PortOneUIController<Request>>
 > {
@@ -310,7 +312,7 @@ export function createSdkUIDelegate<
           ref={webview}
           originWhitelist={originWhitelist ?? ['*']}
           source={{
-            html: sdkUIDelegateHtml(method, request.uiType, requestObject),
+            html: sdkUIDelegateHtml(method, request.uiType, requestObject, callbackPrefix),
             baseUrl: 'https://react-native-sdk-content.portone.io/',
           }}
           onMessage={(event) => onMessage(event, onError, onComplete)}

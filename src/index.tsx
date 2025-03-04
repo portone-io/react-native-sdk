@@ -23,16 +23,17 @@ export const PaymentUI: SdkUIDelegate<
   LoadPaymentUIRequest,
   PaymentResponse,
   PaymentUIController
-> = createSdkUIDelegate<LoadPaymentUIRequest, PaymentResponse>('loadPaymentUI')
+> = createSdkUIDelegate<LoadPaymentUIRequest, PaymentResponse>('loadPaymentUI', 'Payment')
 
 export type IssueBillingKeyUIController =
   PortOneUIController<LoadIssueBillingKeyUIRequest>
-export const IssueBilingKeyUI: SdkUIDelegate<
+export const IssueBillingKeyUI: SdkUIDelegate<
   LoadIssueBillingKeyUIRequest,
   IssueBillingKeyResponse,
   IssueBillingKeyUIController
 > = createSdkUIDelegate<LoadIssueBillingKeyUIRequest, IssueBillingKeyResponse>(
-  'loadIssueBillingKeyUI'
+  'loadIssueBillingKeyUI',
+  'IssueBillingKey',
 )
 
 export const IssueBillingKeyAndPay: SdkDelegate<
