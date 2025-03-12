@@ -203,4 +203,16 @@ export const appScheme: Record<string, AppScheme> = {
     ios: 'id414478124',
     android: 'com.tencent.mm',
   },
+  'tauthlink': {
+    ios: 'id1141258007',
+    android: 'com.sktelecom.tauth',
+  },
+  'ktauthexternalcall': {
+    ios: 'id1134371550',
+    android: 'com.kt.ktauth',
+  },
+  'upluscorporation': {
+    ios: 'id1147394645',
+    android: 'com.lguplus.smartotp',
+  },
 }
