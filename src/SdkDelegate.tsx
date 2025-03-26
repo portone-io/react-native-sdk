@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { Linking, Platform } from 'react-native'
 import { WebView, WebViewProps } from 'react-native-webview'
 import type {
@@ -6,6 +6,7 @@ import type {
   WebViewMessageEvent,
 } from 'react-native-webview/lib/WebViewTypes'
 import { appScheme } from './appScheme'
+import { trace } from './trace'
 
 type DistributiveOmit<T, K extends keyof any> = T extends any
   ? Omit<T, K>
@@ -66,6 +67,7 @@ function onMessage<Response>(
   onError?: (error: Error) => void,
   onComplete?: (response: Response) => void
 ) {
+  trace('onMessage', { data: message.nativeEvent.data })
   const data = JSON.parse(message.nativeEvent.data)
   if ('response' in data) {
     onComplete?.(data.response)
@@ -78,6 +80,7 @@ function onShouldStartLoadWithRequest<Response>(
   request: ShouldStartLoadRequest,
   onComplete?: (response: Response) => void
 ) {
+  trace('onShouldStartLoadWithRequest', { request })
   const url = request.url
   const protocol = url.split(':', 2)[0]!
   switch (protocol) {
@@ -183,6 +186,15 @@ export function createSdkDelegate<Request extends object, Response>(
           return canGoBack
         },
       }))
+      useEffect(() => {
+        const linkHandler = Linking.addEventListener('url', ({ url }) => {
+          trace('linkHandler', { url })
+        })
+        return () => linkHandler.remove()
+      }, [])
+      useEffect(() => {
+        trace('request', { request })
+      }, [request])
       const requestObject = {
         ...request,
         redirectUrl: 'portone://blank',
@@ -215,7 +227,7 @@ function sdkUIDelegateHtml(
   method: string,
   uiType: string,
   requestObject: object,
-  callbackPrefix: string,
+  callbackPrefix: string
 ): string {
   return `<!doctype html>
 <head>
@@ -268,7 +280,7 @@ export function createSdkUIDelegate<
   Response,
 >(
   method: string,
-  callbackPrefix: string,
+  callbackPrefix: string
 ): React.FC<
   SdkUIDelegateProps<Request, Response, PortOneUIController<Request>>
 > {
@@ -297,11 +309,21 @@ export function createSdkUIDelegate<
           return canGoBack
         },
         updateRequest(newRequest: Request) {
+          trace('updateRequest', { newRequest })
           webview.current?.injectJavaScript(
             `PortOne.updateLoadPaymentUIRequest(${JSON.stringify(newRequest)});`
           )
         },
       }))
+      useEffect(() => {
+        const linkHandler = Linking.addEventListener('url', ({ url }) => {
+          trace('linkHandler', { url })
+        })
+        return () => linkHandler.remove()
+      }, [])
+      useEffect(() => {
+        trace('request', { request })
+      }, [request])
       const requestObject = {
         ...request,
         redirectUrl: 'portone://blank',
@@ -312,7 +334,12 @@ export function createSdkUIDelegate<
           ref={webview}
           originWhitelist={originWhitelist ?? ['*']}
           source={{
-            html: sdkUIDelegateHtml(method, request.uiType, requestObject, callbackPrefix),
+            html: sdkUIDelegateHtml(
+              method,
+              request.uiType,
+              requestObject,
+              callbackPrefix
+            ),
             baseUrl: 'https://react-native-sdk-content.portone.io/',
           }}
           onMessage={(event) => onMessage(event, onError, onComplete)}
@@ -338,5 +365,6 @@ async function marketIfFail(link: string, market: string) {
       '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
     )
   }
+  trace('marketFallback', { link, market })
   return Linking.openURL(market)
 }

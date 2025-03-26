@@ -113,6 +113,9 @@ yarn add -D @portone/browser-sdk
     <package android:name="jp.naver.line.android" />
     <package android:name="com.eg.android.AlipayGphone" />
     <package android:name="com.tencent.mm" />
+    <package android:name="com.sktelecom.tauth" />
+    <package android:name="com.kt.ktauth" />
+    <package android:name="com.lguplus.smartotp" />
     <intent>
       <action android:name="android.intent.action.VIEW" />
       <category android:name="android.intent.category.BROWSABLE" />
@@ -179,6 +182,9 @@ yarn add -D @portone/browser-sdk
     <string>line</string>
     <string>alipays</string>
     <string>weixin</string>
+    <string>tauthlink</string>
+    <string>ktauthexternalcall</string>
+    <string>upluscorporation</string>
   </array>
 </dict>
 ```
