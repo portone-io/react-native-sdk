@@ -5,11 +5,13 @@
     "@portone/react-native-sdk": "0.3.5"
   },
   "changesets": [
+    "chatty-swans-drop",
     "chilled-goats-reply",
     "clever-snakes-tie",
     "hot-rings-appear",
     "pink-hounds-vanish",
     "polite-keys-return",
+    "purple-cherries-rest",
     "sixty-cherries-shout",
     "smart-bobcats-yawn",
     "spicy-melons-lick",

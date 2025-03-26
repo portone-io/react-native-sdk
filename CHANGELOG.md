@@ -1,5 +1,12 @@
 # @portone/react-native-sdk
 
+## 0.4.0-alpha.5
+
+### Patch Changes
+
+- 7f5b99c: PASS 앱 추가
+- 7f07c68: SDK 사용 디버그 로그 기록
+
 ## 0.4.0-alpha.4
 
 ### Minor Changes
