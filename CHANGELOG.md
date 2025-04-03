@@ -1,5 +1,29 @@
 # @portone/react-native-sdk
 
+## 0.4.0
+
+### Minor Changes
+
+- 4de7219: \* embed content HTML
+  - rename PgPayment to PaymentUI
+  - fix: pass PaymentUI response via postMessage
+- a597a07: \* bypass WebView props
+  - fix: decode URL components in success response
+  - fix: eslint warning message (#23)
+- 862ef0e: IssueBillingKeyUI 버그 수정
+
+### Patch Changes
+
+- 7f5b99c: PASS 앱 추가
+- ecdd4fd: sdkDelegate에서 항상 오류가 발생하는 문제 수정
+- 10569fe: 외부 앱 등록 감지
+- eb9804e: 페이북 결제 불가 오류 수정
+- 3a6fe27: 우리카드, 라인페이, 알리페이 플러스, 위챗 appScheme 추가
+- 7f07c68: SDK 사용 디버그 로그 기록
+- 1a05b81: fix: decode URI component in url
+- f2e8e97: V3 appScheme 추가
+- 9b95279: 삼성페이 appScheme 추가
+
 ## 0.4.0-alpha.4
 
 ### Minor Changes
