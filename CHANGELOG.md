@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.4.1
+
+### Patch Changes
+
+- 5a91683: intent:appscheme:// 형식 URL 대응
+
 ## 0.4.0
 
 ### Minor Changes
