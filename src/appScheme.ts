@@ -215,4 +215,16 @@ export const appScheme: Record<string, AppScheme> = {
     ios: 'id1147394645',
     android: 'com.lguplus.smartotp',
   },
+  'sbankandnor': {
+    android: 'com.shinhan.sbanking',
+  },
+  'shinhansol': {
+    android: 'com.shinhan.sbanking',
+  },
+  'sfg-shb-sbank': {
+    android: 'com.shinhan.sbanking',
+  },
+  'shinhansolfb': {
+    android: 'com.shinhan.sbanking',
+  },
 }

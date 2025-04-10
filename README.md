@@ -13,14 +13,15 @@ Node.js v18을 지원하며, Expo 51.0.38과 react-native-webview 13.8.6 환경�
 
 ## 설치 (Expo 사용)
 
-1. Expo CLI를 사용해 @portone/react-native-sdk와 react-native-webview를
-   설치합니다.
+1. Expo CLI를 사용해 @portone/react-native-sdk와 의존성인 react-native-webview,
+   expo-intent-launcher을 설치합니다.
 
 ```shell
-npx expo install @portone/react-native-sdk react-native-webview
+npx expo install @portone/react-native-sdk react-native-webview expo-intent-launcher
 ```
 
-2. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에 추가합니다.
+2. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에
+   추가합니다.
 
 ```shell
 npm install --save-dev @portone/browser-sdk
@@ -37,7 +38,8 @@ yarn add -D @portone/browser-sdk
 }
 ```
 
-4. TypeScript를 사용하시는 경우 `tsconfig.json`에 다음 항목을 추가 혹은 수정합니다.
+4. TypeScript를 사용하시는 경우 `tsconfig.json`에 다음 항목을 추가 혹은
+   수정합니다.
 
 ```json
 "compilerOptions": {
@@ -48,28 +50,31 @@ yarn add -D @portone/browser-sdk
 
 ## 설치 (Expo 미사용)
 
-1. @portone/react-native-sdk와 react-native-webview를
-   설치합니다.
+1. @portone/react-native-sdk와 의존성인 react-native-webview,
+   expo-intent-launcher을 설치합니다.
 
 ```shell
-npm install --save @portone/react-native-sdk react-native-webview
-yarn add @portone/react-native-sdk react-native-webview
+npm install --save @portone/react-native-sdk react-native-webview expo-intent-launcher
+yarn add @portone/react-native-sdk react-native-webview expo-intent-launcher
 ```
 
-2. ios 서브디렉토리에서 pod를 사용해 react-native-webview에 필요한 네이티브 의존성을 링킹힙니다.
+2. ios 서브디렉토리에서 pod를 사용해 react-native-webview에 필요한 네이티브
+   의존성을 링킹힙니다.
 
 ```sh
 pod install
 ```
 
-3. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에 추가합니다.
+3. TypeScript를 사용하시는 경우 @portone/browser-sdk를 devDependencies에
+   추가합니다.
 
 ```shell
 npm install --save-dev @portone/browser-sdk
 yarn add -D @portone/browser-sdk
 ```
 
-4. TypeScript를 사용하시는 경우 `tsconfig.json`에 다음 항목을 추가 혹은 수정합니다.
+4. TypeScript를 사용하시는 경우 `tsconfig.json`에 다음 항목을 추가 혹은
+   수정합니다.
 
 ```json
 "compilerOptions": {
@@ -78,7 +83,8 @@ yarn add -D @portone/browser-sdk
 }
 ```
 
-5. 앱 링크를 사용하기 위해 android/app/src/main/AndroidManifest.xml 파일에 아래 내용을 추가합니다.
+5. 앱 링크를 사용하기 위해 android/app/src/main/AndroidManifest.xml 파일에 아래
+   내용을 추가합니다.
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -126,7 +132,8 @@ yarn add -D @portone/browser-sdk
 </manifest>
 ```
 
-6. 앱 링크를 사용하기 위해 ios/(프로젝트 이름)/Info.plist 파일에 아래 내용을 추가합니다.
+6. 앱 링크를 사용하기 위해 ios/(프로젝트 이름)/Info.plist 파일에 아래 내용을
+   추가합니다.
 
 ```xml
 <dict>
@@ -205,7 +212,11 @@ import {
 <Payment request={/* ... */} />
 ```
 
-세부 사용법과 관련하여 [React Native 포트원 샘플 프로젝트](https://github.com/portone-io/portone-sample/tree/main/react-native) 및 [React Native Expo 포트원 샘플 프로젝트](https://github.com/portone-io/portone-sample/tree/main/react-native-expo)를 참고하실 수 있습니다.
+세부 사용법과 관련하여
+[React Native 포트원 샘플 프로젝트](https://github.com/portone-io/portone-sample/tree/main/react-native)
+및
+[React Native Expo 포트원 샘플 프로젝트](https://github.com/portone-io/portone-sample/tree/main/react-native-expo)를
+참고하실 수 있습니다.
 
 ---
 
