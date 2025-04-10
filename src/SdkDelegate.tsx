@@ -7,6 +7,7 @@ import type {
 } from 'react-native-webview/lib/WebViewTypes'
 import { appScheme } from './appScheme'
 import { trace } from './trace'
+import { startActivityAsync } from 'expo-intent-launcher'
 
 type DistributiveOmit<T, K extends keyof any> = T extends any
   ? Omit<T, K>
@@ -130,7 +131,7 @@ function onShouldStartLoadWithRequest<Response>(
             ? `market://details?id=${appScheme[protocol]?.android}`
             : `itms-apps://apps.apple.com/app/${appScheme[protocol]?.ios}`
         marketIfFail(url, marketUrl)
-      } else Linking.openURL(url).catch(() => {})
+      } else openURLSameTask(url).catch(() => {})
       return false
     }
   }
@@ -356,12 +357,25 @@ export function createSdkUIDelegate<
 
 async function marketIfFail(link: string, market: string) {
   try {
-    if (await Linking.canOpenURL(link)) return Linking.openURL(link)
+    if (await Linking.canOpenURL(link)) return openURLSameTask(link)
   } catch {
     console.error(
       '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
     )
   }
   trace('marketFallback', { link, market })
-  return Linking.openURL(market)
+  return openURLSameTask(market)
+}
+
+async function openURLSameTask(url: string) {
+  if (Platform.OS === 'android') {
+    const colonIdx = url.indexOf(':')
+    const schemeNormalizedUrl = colonIdx !== -1 ? `${url.substring(0, colonIdx).toLowerCase()}${url.substring(colonIdx)}` : url
+    trace('openURLSameTask', {schemeNormalizedUrl})
+    return startActivityAsync('android.intent.action.VIEW', {
+      data: schemeNormalizedUrl
+    })
+  } else {
+    return Linking.openURL(url)
+  }
 }

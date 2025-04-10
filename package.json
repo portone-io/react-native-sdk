@@ -113,7 +113,8 @@
     "expo": "*",
     "react": "*",
     "react-native": "*",
-    "react-native-webview": "*"
+    "react-native-webview": "*",
+    "expo-intent-launcher": "*"
   },
   "packageManager": "pnpm@9.11.0",
   "jest": {
