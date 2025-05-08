@@ -1,4 +1,5 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import type React from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { Linking, Platform } from 'react-native'
 import { WebView, WebViewProps } from 'react-native-webview'
 import type {
@@ -7,7 +8,7 @@ import type {
 } from 'react-native-webview/lib/WebViewTypes'
 import { appScheme } from './appScheme'
 import { trace } from './trace'
-import { startActivityAsync } from 'expo-intent-launcher'
+import NativeModule from './NativeModule'
 
 type DistributiveOmit<T, K extends keyof any> = T extends any
   ? Omit<T, K>
@@ -372,9 +373,7 @@ async function openURLSameTask(url: string) {
     const colonIdx = url.indexOf(':')
     const schemeNormalizedUrl = colonIdx !== -1 ? `${url.substring(0, colonIdx).toLowerCase()}${url.substring(colonIdx)}` : url
     trace('openURLSameTask', {schemeNormalizedUrl})
-    return startActivityAsync('android.intent.action.VIEW', {
-      data: schemeNormalizedUrl
-    })
+    return NativeModule.startIntent(schemeNormalizedUrl)
   } else {
     return Linking.openURL(url)
   }

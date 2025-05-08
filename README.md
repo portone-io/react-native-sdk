@@ -87,7 +87,7 @@ yarn add -D @portone/browser-sdk
    내용을 추가합니다.
 
 ```xml
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="https://schemas.android.com/apk/res/android">
   <!-- 중략 -->
   <queries>
     <package android:name="com.kftc.bankpay.android" />
