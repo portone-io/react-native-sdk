@@ -11,7 +11,7 @@ import java.net.URISyntaxException
 class NativeModule(reactContext: ReactApplicationContext) : NativeModuleSpec(reactContext) {
   override fun getName(): String = NAME
 
-  override fun startIntent(
+  override fun startActivity(
     uri: String,
     promise: Promise,
   ) {
@@ -22,7 +22,7 @@ class NativeModule(reactContext: ReactApplicationContext) : NativeModuleSpec(rea
       return
     }
     try {
-      reactApplicationContext.startActivity(intent)
+      reactApplicationContext.currentActivity!!.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
       promise.reject("ACTIVITY_NOT_FOUND", e)
       return

@@ -373,7 +373,7 @@ async function openURLSameTask(url: string) {
     const colonIdx = url.indexOf(':')
     const schemeNormalizedUrl = colonIdx !== -1 ? `${url.substring(0, colonIdx).toLowerCase()}${url.substring(colonIdx)}` : url
     trace('openURLSameTask', {schemeNormalizedUrl})
-    return NativeModule.startIntent(schemeNormalizedUrl)
+    return NativeModule.startActivity(schemeNormalizedUrl)
   } else {
     return Linking.openURL(url)
   }

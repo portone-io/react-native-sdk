@@ -1,7 +1,7 @@
 import { TurboModule, TurboModuleRegistry } from 'react-native';
 
 export interface Spec extends TurboModule {
-  startIntent(
+  startActivity(
     uri: string,
   ): Promise<void>
 }
