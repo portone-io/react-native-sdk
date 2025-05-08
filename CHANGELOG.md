@@ -6,6 +6,16 @@
 
 - 248d820: 신한은행 appScheme 추가 (backport)
 
+## 0.5.0
+
+### Minor Changes
+
+- 9b70f38: Use startActivityAsync instead of Linking.openURL in Android (added expo-intent-launcher peer dependency)
+
+### Patch Changes
+
+- 9287b46: 신한은행 appScheme 추가
+
 ## 0.4.1
 
 ### Patch Changes
