@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.4.2
+
+### Patch Changes
+
+- 248d820: 신한은행 appScheme 추가 (backport)
+
 ## 0.4.1
 
 ### Patch Changes
