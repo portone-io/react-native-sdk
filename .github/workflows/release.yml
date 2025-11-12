@@ -8,12 +8,24 @@ jobs:
   release:
     environment: npm
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          # provenance requires node>=24
+          node-version: 24
+
+      - name: Install dependencies
+        run: pnpm install
+        shell: bash
 
       - name: Create release pull request or publish to npm
         id: changesets
@@ -21,7 +33,6 @@ jobs:
         with:
           publish: pnpm publish
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Send a Slack notification if a publish happens
