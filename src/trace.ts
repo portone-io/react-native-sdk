@@ -1,3 +1,3 @@
-export function trace(...args: any[]) {
+export function trace(...args: unknown[]) {
   console.debug('[@portone/react-native-sdk]', ...args)
 }
