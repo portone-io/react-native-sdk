@@ -1,4 +1,10 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
 import { Linking, Platform } from 'react-native'
 import { WebView, WebViewProps } from 'react-native-webview'
 import type {
@@ -87,8 +93,15 @@ function onShouldStartLoadWithRequest<Response>(
   switch (protocol) {
     case 'about':
     case 'http':
-    case 'https':
+    case 'https': {
+      const host = url.slice(protocol.length + 3).split('/', 2)[0]
+      // Native Module로 일반화 필요
+      if (host?.endsWith('gcash.onelink.me') === true) {
+        Linking.openURL(url)
+        return false
+      }
       return true
+    }
     case 'portone': {
       const [, search] = url.split('?', 2)
       const args =
@@ -118,8 +131,12 @@ function onShouldStartLoadWithRequest<Response>(
       }
       const packageName = params.get('package')
       const scheme = params.get('scheme')
-      const withoutIntent = url.slice(protocol.length + 1, hashIndex === -1 ? undefined : hashIndex)
-      const redirectUrl = scheme != null ? `${scheme}:${withoutIntent}` : withoutIntent
+      const withoutIntent = url.slice(
+        protocol.length + 1,
+        hashIndex === -1 ? undefined : hashIndex
+      )
+      const redirectUrl =
+        scheme != null ? `${scheme}:${withoutIntent}` : withoutIntent
       const playUrl = `market://details?id=${packageName}`
       marketIfFail(redirectUrl, playUrl)
       return false
@@ -370,10 +387,13 @@ async function marketIfFail(link: string, market: string) {
 async function openURLSameTask(url: string) {
   if (Platform.OS === 'android') {
     const colonIdx = url.indexOf(':')
-    const schemeNormalizedUrl = colonIdx !== -1 ? `${url.substring(0, colonIdx).toLowerCase()}${url.substring(colonIdx)}` : url
-    trace('openURLSameTask', {schemeNormalizedUrl})
+    const schemeNormalizedUrl =
+      colonIdx !== -1
+        ? `${url.substring(0, colonIdx).toLowerCase()}${url.substring(colonIdx)}`
+        : url
+    trace('openURLSameTask', { schemeNormalizedUrl })
     return startActivityAsync('android.intent.action.VIEW', {
-      data: schemeNormalizedUrl
+      data: schemeNormalizedUrl,
     })
   } else {
     return Linking.openURL(url)
