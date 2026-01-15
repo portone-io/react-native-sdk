@@ -96,7 +96,7 @@ function onShouldStartLoadWithRequest<Response>(
     case 'https': {
       const host = url.slice(protocol.length + 3).split('/', 2)[0]
       // Native Module로 일반화 필요
-      if (host?.endsWith('gcash.onelink.me') === true) {
+      if (host === 'gcash.onelink.me') {
         Linking.openURL(url)
         return false
       }
