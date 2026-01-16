@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.6.0
+
+### Minor Changes
+
+- a70cbb9: 불필요한 app scheme 정리 및 plugin 업데이트
+
 ## 0.5.1
 
 ### Patch Changes
