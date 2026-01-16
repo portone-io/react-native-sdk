@@ -96,12 +96,12 @@ function onShouldStartLoadWithRequest<Response>(
     case 'https': {
       const host = url.slice(protocol.length + 3).split('/', 2)[0]
       // Native Module로 일반화 필요
-      if (host === 'gcash.onelink.me') {
-        const marketUrl =
-          Platform.OS === 'android'
-            ? `market://details?id=${appScheme.gcash.android}`
-            : `itms-apps://apps.apple.com/app/${appScheme.gcash.ios}`
-        marketIfFailWithDeepLink('gcash://com.mynt.gcash/app', url, marketUrl)
+      if (host === 'gcash.onelink.me' && Platform.OS === 'android') {
+        marketIfFailWithDeepLink(
+          'gcash://com.mynt.gcash/app',
+          url,
+          `market://details?id=${appScheme.gcash.android}`
+        )
         return false
       }
       return true
