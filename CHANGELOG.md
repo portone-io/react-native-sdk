@@ -1,5 +1,11 @@
 # @portone/react-native-sdk
 
+## 0.5.1
+
+### Patch Changes
+
+- 03dac55: gcash 딥링크 대응
+
 ## 0.4.2
 
 ### Patch Changes
