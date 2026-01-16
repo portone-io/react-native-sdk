@@ -227,4 +227,8 @@ export const appScheme: Record<string, AppScheme> = {
   'shinhansolfb': {
     android: 'com.shinhan.sbanking',
   },
+  'gcash': {
+    ios: 'id520020791',
+    android: 'com.globe.gcash.android',
+  },
 }

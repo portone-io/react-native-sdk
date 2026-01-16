@@ -123,6 +123,7 @@ yarn add -D @portone/browser-sdk
     <package android:name="com.kt.ktauth" />
     <package android:name="com.lguplus.smartotp" />
     <package android:name="com.shinhan.sbanking" />
+    <package android:name="com.globe.gcash.android" />
     <intent>
       <action android:name="android.intent.action.VIEW" />
       <category android:name="android.intent.category.BROWSABLE" />
@@ -134,6 +135,8 @@ yarn add -D @portone/browser-sdk
 
 6. 앱 링크를 사용하기 위해 ios/(프로젝트 이름)/Info.plist 파일에 아래 내용을
    추가합니다.
+
+iOS 15 이상 버전에서는 최대 50개의 항목만이 적용되므로, 필요한 항목만을 추가합니다.
 
 ```xml
 <dict>
@@ -193,6 +196,7 @@ yarn add -D @portone/browser-sdk
     <string>tauthlink</string>
     <string>ktauthexternalcall</string>
     <string>upluscorporation</string>
+    <string>gcash</string>
   </array>
 </dict>
 ```

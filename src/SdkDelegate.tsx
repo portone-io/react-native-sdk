@@ -97,7 +97,11 @@ function onShouldStartLoadWithRequest<Response>(
       const host = url.slice(protocol.length + 3).split('/', 2)[0]
       // Native Module로 일반화 필요
       if (host === 'gcash.onelink.me') {
-        Linking.openURL(url)
+        const marketUrl =
+          Platform.OS === 'android'
+            ? `market://details?id=${appScheme.gcash.android}`
+            : `itms-apps://apps.apple.com/app/${appScheme.gcash.ios}`
+        marketIfFailWithDeepLink('gcash://com.mynt.gcash/app', url, marketUrl)
         return false
       }
       return true
@@ -382,6 +386,22 @@ async function marketIfFail(link: string, market: string) {
   }
   trace('marketFallback', { link, market })
   return openURLSameTask(market)
+}
+
+async function marketIfFailWithDeepLink(
+  schemeUrl: string,
+  deeplink: string,
+  market: string
+) {
+  try {
+    if (await Linking.canOpenURL(schemeUrl)) return Linking.openURL(deeplink)
+  } catch {
+    console.error(
+      '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
+    )
+  }
+  trace('marketFallback', { deeplink, market })
+  return Linking.openURL(market)
 }
 
 async function openURLSameTask(url: string) {
