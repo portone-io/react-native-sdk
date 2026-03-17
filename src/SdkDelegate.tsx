@@ -48,25 +48,22 @@ type OverridableWebViewProps = Omit<
   | 'javaScriptEnabled'
 >
 
+export type SdkDelegateRef = PortOneController
 export type SdkDelegateProps<Request, Response> = {
   request: DistributiveOmit<Request, 'requestUrl'>
   onError?: (error: Error) => void
   onComplete?: (response: Response) => void
-  ref?: React.LegacyRef<PortOneController>
 } & OverridableWebViewProps
 
-export type SdkUIDelegateProps<Request, Response, Controller> = {
+export type SdkUIDelegateProps<Request, Response> = {
   request: DistributiveOmit<Request, 'requestUrl'>
   onError?: (error: Error) => void
   onComplete?: (response: Response) => void
-  ref?: React.LegacyRef<Controller>
 } & OverridableWebViewProps
 
-export type SdkDelegate<Request, Response> = React.FC<
-  SdkDelegateProps<Request, Response>
->
-export type SdkUIDelegate<Request, Response, Controller> = React.FC<
-  SdkUIDelegateProps<Request, Response, Controller>
+export type SdkDelegate<Request, Response> = React.ForwardRefExoticComponent<SdkDelegateProps<Request, Response> & React.RefAttributes<SdkDelegateRef>>
+export type SdkUIDelegate<Request, Response, ControllerRef> = React.ForwardRefExoticComponent<
+  SdkUIDelegateProps<Request, Response> & React.RefAttributes<ControllerRef>
 >
 
 function onMessage<Response>(
@@ -182,8 +179,8 @@ function sdkDelegateHtml(method: string, requestObject: object): string {
 
 export function createSdkDelegate<Request extends object, Response>(
   method: string
-): React.FC<SdkDelegateProps<Request, Response>> {
-  return forwardRef<PortOneController, SdkDelegateProps<Request, Response>>(
+): SdkDelegate<Request, Response> {
+  return forwardRef<SdkDelegateRef, SdkDelegateProps<Request, Response>>(
     (
       {
         request,
@@ -204,16 +201,19 @@ export function createSdkDelegate<Request extends object, Response>(
         get canGoBack() {
           return canGoBack
         },
-      }))
+      }),[canGoBack])
+      
       useEffect(() => {
         const linkHandler = Linking.addEventListener('url', ({ url }) => {
           trace('linkHandler', { url })
         })
         return () => linkHandler.remove()
       }, [])
+
       useEffect(() => {
         trace('request', { request })
       }, [request])
+
       const requestObject = {
         ...request,
         redirectUrl: 'portone://blank',
@@ -300,12 +300,11 @@ export function createSdkUIDelegate<
 >(
   method: string,
   callbackPrefix: string
-): React.FC<
-  SdkUIDelegateProps<Request, Response, PortOneUIController<Request>>
-> {
+): SdkUIDelegate<Request, Response, PortOneUIController<Request>>
+{
   return forwardRef<
     PortOneUIController<Request>,
-    SdkUIDelegateProps<Request, Response, PortOneUIController<Request>>
+    SdkUIDelegateProps<Request, Response>
   >(
     (
       {
@@ -333,16 +332,19 @@ export function createSdkUIDelegate<
             `PortOne.updateLoadPaymentUIRequest(${JSON.stringify(newRequest)});`
           )
         },
-      }))
+      }),[canGoBack])
+
       useEffect(() => {
         const linkHandler = Linking.addEventListener('url', ({ url }) => {
           trace('linkHandler', { url })
         })
         return () => linkHandler.remove()
       }, [])
+
       useEffect(() => {
         trace('request', { request })
       }, [request])
+      
       const requestObject = {
         ...request,
         redirectUrl: 'portone://blank',
