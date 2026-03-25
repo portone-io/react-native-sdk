@@ -110,11 +110,9 @@
   },
   "peerDependencies": {
     "@portone/browser-sdk": "*",
-    "expo": "*",
     "react": "*",
     "react-native": "*",
-    "react-native-webview": "*",
-    "expo-intent-launcher": "*"
+    "react-native-webview": "*"
   },
   "packageManager": "pnpm@9.11.0",
   "jest": {
