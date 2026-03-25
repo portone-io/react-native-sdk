@@ -13,7 +13,6 @@ import type {
 } from 'react-native-webview/lib/WebViewTypes'
 import { appScheme } from './appScheme'
 import { trace } from './trace'
-import { startActivityAsync } from 'expo-intent-launcher'
 
 type DistributiveOmit<T, K extends keyof any> = T extends any
   ? Omit<T, K>
@@ -61,10 +60,13 @@ export type SdkUIDelegateProps<Request, Response> = {
   onComplete?: (response: Response) => void
 } & OverridableWebViewProps
 
-export type SdkDelegate<Request, Response> = React.ForwardRefExoticComponent<SdkDelegateProps<Request, Response> & React.RefAttributes<SdkDelegateRef>>
-export type SdkUIDelegate<Request, Response, ControllerRef> = React.ForwardRefExoticComponent<
-  SdkUIDelegateProps<Request, Response> & React.RefAttributes<ControllerRef>
+export type SdkDelegate<Request, Response> = React.ForwardRefExoticComponent<
+  SdkDelegateProps<Request, Response> & React.RefAttributes<SdkDelegateRef>
 >
+export type SdkUIDelegate<Request, Response, ControllerRef> =
+  React.ForwardRefExoticComponent<
+    SdkUIDelegateProps<Request, Response> & React.RefAttributes<ControllerRef>
+  >
 
 function onMessage<Response>(
   message: WebViewMessageEvent,
@@ -149,7 +151,7 @@ function onShouldStartLoadWithRequest<Response>(
             ? `market://details?id=${appScheme[protocol]?.android}`
             : `itms-apps://apps.apple.com/app/${appScheme[protocol]?.ios}`
         marketIfFail(url, marketUrl)
-      } else openURLSameTask(url).catch(() => {})
+      } else Linking.openURL(url).catch(() => {})
       return false
     }
   }
@@ -194,15 +196,19 @@ export function createSdkDelegate<Request extends object, Response>(
     ) => {
       const [canGoBack, setCanGoBack] = useState(false)
       const webview = useRef<WebView>(null)
-      useImperativeHandle(ref, () => ({
-        get webview() {
-          return webview.current
-        },
-        get canGoBack() {
-          return canGoBack
-        },
-      }),[canGoBack])
-      
+      useImperativeHandle(
+        ref,
+        () => ({
+          get webview() {
+            return webview.current
+          },
+          get canGoBack() {
+            return canGoBack
+          },
+        }),
+        [canGoBack]
+      )
+
       useEffect(() => {
         const linkHandler = Linking.addEventListener('url', ({ url }) => {
           trace('linkHandler', { url })
@@ -300,8 +306,7 @@ export function createSdkUIDelegate<
 >(
   method: string,
   callbackPrefix: string
-): SdkUIDelegate<Request, Response, PortOneUIController<Request>>
-{
+): SdkUIDelegate<Request, Response, PortOneUIController<Request>> {
   return forwardRef<
     PortOneUIController<Request>,
     SdkUIDelegateProps<Request, Response>
@@ -319,20 +324,24 @@ export function createSdkUIDelegate<
     ) => {
       const [canGoBack, setCanGoBack] = useState(false)
       const webview = useRef<WebView>(null)
-      useImperativeHandle(ref, () => ({
-        get webview() {
-          return webview.current
-        },
-        get canGoBack() {
-          return canGoBack
-        },
-        updateRequest(newRequest: Request) {
-          trace('updateRequest', { newRequest })
-          webview.current?.injectJavaScript(
-            `PortOne.updateLoadPaymentUIRequest(${JSON.stringify(newRequest)});`
-          )
-        },
-      }),[canGoBack])
+      useImperativeHandle(
+        ref,
+        () => ({
+          get webview() {
+            return webview.current
+          },
+          get canGoBack() {
+            return canGoBack
+          },
+          updateRequest(newRequest: Request) {
+            trace('updateRequest', { newRequest })
+            webview.current?.injectJavaScript(
+              `PortOne.updateLoadPaymentUIRequest(${JSON.stringify(newRequest)});`
+            )
+          },
+        }),
+        [canGoBack]
+      )
 
       useEffect(() => {
         const linkHandler = Linking.addEventListener('url', ({ url }) => {
@@ -344,7 +353,7 @@ export function createSdkUIDelegate<
       useEffect(() => {
         trace('request', { request })
       }, [request])
-      
+
       const requestObject = {
         ...request,
         redirectUrl: 'portone://blank',
@@ -380,14 +389,14 @@ export function createSdkUIDelegate<
 
 async function marketIfFail(link: string, market: string) {
   try {
-    if (await Linking.canOpenURL(link)) return openURLSameTask(link)
+    if (await Linking.canOpenURL(link)) return Linking.openURL(link)
   } catch {
     console.error(
       '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
     )
   }
   trace('marketFallback', { link, market })
-  return openURLSameTask(market)
+  return Linking.openURL(market)
 }
 
 async function marketIfFailWithDeepLink(
@@ -404,20 +413,4 @@ async function marketIfFailWithDeepLink(
   }
   trace('marketFallback', { deeplink, market })
   return Linking.openURL(market)
-}
-
-async function openURLSameTask(url: string) {
-  if (Platform.OS === 'android') {
-    const colonIdx = url.indexOf(':')
-    const schemeNormalizedUrl =
-      colonIdx !== -1
-        ? `${url.substring(0, colonIdx).toLowerCase()}${url.substring(colonIdx)}`
-        : url
-    trace('openURLSameTask', { schemeNormalizedUrl })
-    return startActivityAsync('android.intent.action.VIEW', {
-      data: schemeNormalizedUrl,
-    })
-  } else {
-    return Linking.openURL(url)
-  }
 }
