@@ -4,23 +4,32 @@ on:
     branches:
       - main
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   release:
+    name: Release
     environment: npm
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      pull-requests: write
-      contents: write
+      id-token: write # for npm provenance
+      pull-requests: write # for changesets to create PRs
+      contents: write # for changesets to create releases
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          persist-credentials: false
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           # provenance requires node>=24
           node-version: 24
@@ -31,7 +40,7 @@ jobs:
 
       - name: Create release pull request or publish to npm
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         with:
           publish: pnpm publish
         env:
@@ -39,8 +48,10 @@ jobs:
 
       - name: Send a Slack notification if a publish happens
         if: ${{ steps.changesets.outputs.hasChangesets == 'false' }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          export VERSION=$(jq -r '.version' package.json)
+          VERSION=$(jq -r '.version' package.json)
           curl -X POST -H 'Content-type: application/json'\
             --data '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"npm에 `@portone/react-native-sdk` 버전 *v'"$VERSION"'* 가 배포되었습니다 :rocket:"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"npm 페이지 보기"},"value":"show_npm_page","url":"https://www.npmjs.com/package/@portone/react-native-sdk/v/'"$VERSION"'","action_id":"show_npm_page"},{"type":"button","text":{"type":"plain_text","text":"체인지로그 보기"},"value":"show_changelog","url":"https://github.com/portone-io/react-native-sdk/blob/main/CHANGELOG.md","action_id":"show_changelog"}]}]}'\
-            ${{ secrets.SLACK_WEBHOOK_URL }}
+            "$SLACK_WEBHOOK_URL"
