@@ -35,7 +35,7 @@ jobs:
           node-version: 24
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
         shell: bash
 
       - name: Create release pull request or publish to npm
