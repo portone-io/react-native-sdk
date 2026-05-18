@@ -1,0 +1,2 @@
+allowBuilds:
+  '@evilmartians/lefthook': set this to true or false
