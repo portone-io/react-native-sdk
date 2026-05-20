@@ -14,7 +14,7 @@ import type {
 import { appScheme } from './appScheme'
 import { trace } from './trace'
 
-type DistributiveOmit<T, K extends keyof any> = T extends any
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
   ? Omit<T, K>
   : never
 
