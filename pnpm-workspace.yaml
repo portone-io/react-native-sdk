@@ -1,2 +1,20 @@
+strictDepBuilds: true
 allowBuilds:
   '@evilmartians/lefthook': true
+
+minimumReleaseAge: 4320
+minimumReleaseAgeStrict: true
+
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 525960
+
+blockExoticSubdeps: true
+
+engineStrict: true
+
+catalog:
+  '@changesets/cli': ^2.31.0
+  '@types/react': ^19.2.14
+  react: ~19.2.5
+  react-native: ~0.83.6
+  typescript: ^6.0.3
