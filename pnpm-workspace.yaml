@@ -1,6 +1,8 @@
 strictDepBuilds: true
+
 allowBuilds:
   '@evilmartians/lefthook': true
+  unrs-resolver: true
 
 minimumReleaseAge: 4320
 minimumReleaseAgeStrict: true
