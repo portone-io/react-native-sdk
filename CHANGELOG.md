@@ -1,5 +1,15 @@
 # @portone/react-native-sdk
 
+## 0.7.0
+
+### Minor Changes
+
+- 0766df0: expo-intent-launcher 의존성 제거 및 제3자 앱 시작 시 신규 task 생성
+
+### Patch Changes
+
+- e7e132a: sdkDelegate 의 타입을 수정하고, 잘못된 의존성 사용으로 인한 코드 리팩토링
+
 ## 0.6.0
 
 ### Minor Changes
