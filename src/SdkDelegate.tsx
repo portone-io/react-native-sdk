@@ -12,6 +12,7 @@ import type {
   WebViewMessageEvent,
 } from 'react-native-webview/lib/WebViewTypes'
 import { appScheme } from './appScheme'
+import { toError } from './toError'
 import { trace } from './trace'
 
 type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
@@ -48,29 +49,39 @@ type OverridableWebViewProps = Omit<
 >
 
 export type SdkDelegateRef = PortOneController
-export type SdkDelegateProps<Request, Response> = {
+export type SdkDelegateProps<Request, Response, ErrorType = Error> = {
   request: DistributiveOmit<Request, 'requestUrl'>
-  onError?: (error: Error) => void
+  onError?: (error: ErrorType) => void
   onComplete?: (response: Response) => void
 } & OverridableWebViewProps
 
-export type SdkUIDelegateProps<Request, Response> = {
+export type SdkUIDelegateProps<Request, Response, ErrorType = Error> = {
   request: DistributiveOmit<Request, 'requestUrl'>
-  onError?: (error: Error) => void
+  onError?: (error: ErrorType) => void
   onComplete?: (response: Response) => void
 } & OverridableWebViewProps
 
-export type SdkDelegate<Request, Response> = React.ForwardRefExoticComponent<
-  SdkDelegateProps<Request, Response> & React.RefAttributes<SdkDelegateRef>
+export type SdkDelegate<
+  Request,
+  Response,
+  ErrorType = Error,
+> = React.ForwardRefExoticComponent<
+  SdkDelegateProps<Request, Response, ErrorType> &
+    React.RefAttributes<SdkDelegateRef>
 >
-export type SdkUIDelegate<Request, Response, ControllerRef> =
-  React.ForwardRefExoticComponent<
-    SdkUIDelegateProps<Request, Response> & React.RefAttributes<ControllerRef>
-  >
+export type SdkUIDelegate<
+  Request,
+  Response,
+  ControllerRef,
+  ErrorType = Error,
+> = React.ForwardRefExoticComponent<
+  SdkUIDelegateProps<Request, Response, ErrorType> &
+    React.RefAttributes<ControllerRef>
+>
 
-function onMessage<Response>(
+function onMessage<Response, ErrorType>(
   message: WebViewMessageEvent,
-  onError?: (error: Error) => void,
+  onError?: (error: ErrorType) => void,
   onComplete?: (response: Response) => void
 ) {
   trace('onMessage', { data: message.nativeEvent.data })
@@ -78,7 +89,7 @@ function onMessage<Response>(
   if ('response' in data) {
     onComplete?.(data.response)
   } else if ('error' in data) {
-    onError?.(new Error(data.error.message))
+    onError?.(toError(data.error) as ErrorType)
   }
 }
 
@@ -179,10 +190,15 @@ function sdkDelegateHtml(method: string, requestObject: object): string {
 `
 }
 
-export function createSdkDelegate<Request extends object, Response>(
-  method: string
-): SdkDelegate<Request, Response> {
-  return forwardRef<SdkDelegateRef, SdkDelegateProps<Request, Response>>(
+export function createSdkDelegate<
+  Request extends object,
+  Response,
+  ErrorType = Error,
+>(method: string): SdkDelegate<Request, Response, ErrorType> {
+  return forwardRef<
+    SdkDelegateRef,
+    SdkDelegateProps<Request, Response, ErrorType>
+  >(
     (
       {
         request,
@@ -303,13 +319,14 @@ function sdkUIDelegateHtml(
 export function createSdkUIDelegate<
   Request extends { uiType: string },
   Response,
+  ErrorType = Error,
 >(
   method: string,
   callbackPrefix: string
-): SdkUIDelegate<Request, Response, PortOneUIController<Request>> {
+): SdkUIDelegate<Request, Response, PortOneUIController<Request>, ErrorType> {
   return forwardRef<
     PortOneUIController<Request>,
-    SdkUIDelegateProps<Request, Response>
+    SdkUIDelegateProps<Request, Response, ErrorType>
   >(
     (
       {

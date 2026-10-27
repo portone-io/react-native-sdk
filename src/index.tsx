@@ -1,12 +1,18 @@
 import type {
+  IdentityVerificationError,
   IdentityVerificationRequest,
   IdentityVerificationResponse,
+  IssueBillingKeyAndPayError,
   IssueBillingKeyAndPayRequest,
   IssueBillingKeyAndPayResponse,
+  IssueBillingKeyError,
   IssueBillingKeyRequest,
   IssueBillingKeyResponse,
+  LoadIssueBillingKeyUIError,
   LoadIssueBillingKeyUIRequest,
+  LoadPaymentUIError,
   LoadPaymentUIRequest,
+  PaymentError,
   PaymentRequest,
   PaymentResponse,
 } from '@portone/browser-sdk/v2'
@@ -22,47 +28,63 @@ export type PaymentUIController = PortOneUIController<LoadPaymentUIRequest>
 export const PaymentUI: SdkUIDelegate<
   LoadPaymentUIRequest,
   PaymentResponse,
-  PaymentUIController
-> = createSdkUIDelegate<LoadPaymentUIRequest, PaymentResponse>(
-  'loadPaymentUI',
-  'Payment'
-)
+  PaymentUIController,
+  LoadPaymentUIError
+> = createSdkUIDelegate<
+  LoadPaymentUIRequest,
+  PaymentResponse,
+  LoadPaymentUIError
+>('loadPaymentUI', 'Payment')
 
 export type IssueBillingKeyUIController =
   PortOneUIController<LoadIssueBillingKeyUIRequest>
 export const IssueBillingKeyUI: SdkUIDelegate<
   LoadIssueBillingKeyUIRequest,
   IssueBillingKeyResponse,
-  IssueBillingKeyUIController
-> = createSdkUIDelegate<LoadIssueBillingKeyUIRequest, IssueBillingKeyResponse>(
-  'loadIssueBillingKeyUI',
-  'IssueBillingKey'
-)
+  IssueBillingKeyUIController,
+  LoadIssueBillingKeyUIError
+> = createSdkUIDelegate<
+  LoadIssueBillingKeyUIRequest,
+  IssueBillingKeyResponse,
+  LoadIssueBillingKeyUIError
+>('loadIssueBillingKeyUI', 'IssueBillingKey')
 
 export const IssueBillingKeyAndPay: SdkDelegate<
   IssueBillingKeyAndPayRequest,
-  IssueBillingKeyAndPayResponse
+  IssueBillingKeyAndPayResponse,
+  IssueBillingKeyAndPayError
 > = createSdkDelegate<
   IssueBillingKeyAndPayRequest,
-  IssueBillingKeyAndPayResponse
+  IssueBillingKeyAndPayResponse,
+  IssueBillingKeyAndPayError
 >('requestIssueBillingKeyAndPay')
 
 export const IssueBillingKey: SdkDelegate<
   IssueBillingKeyRequest,
-  IssueBillingKeyResponse
-> = createSdkDelegate<IssueBillingKeyRequest, IssueBillingKeyResponse>(
-  'requestIssueBillingKey'
-)
+  IssueBillingKeyResponse,
+  IssueBillingKeyError
+> = createSdkDelegate<
+  IssueBillingKeyRequest,
+  IssueBillingKeyResponse,
+  IssueBillingKeyError
+>('requestIssueBillingKey')
 
 export const IdentityVerification: SdkDelegate<
   IdentityVerificationRequest,
-  IdentityVerificationResponse
+  IdentityVerificationResponse,
+  IdentityVerificationError
 > = createSdkDelegate<
   IdentityVerificationRequest,
-  IdentityVerificationResponse
+  IdentityVerificationResponse,
+  IdentityVerificationError
 >('requestIdentityVerification')
 
-export const Payment: SdkDelegate<PaymentRequest, PaymentResponse> =
-  createSdkDelegate<PaymentRequest, PaymentResponse>('requestPayment')
+export const Payment: SdkDelegate<
+  PaymentRequest,
+  PaymentResponse,
+  PaymentError
+> = createSdkDelegate<PaymentRequest, PaymentResponse, PaymentError>(
+  'requestPayment'
+)
 
 export type { PortOneController } from './SdkDelegate'
