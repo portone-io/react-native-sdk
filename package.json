@@ -38,12 +38,10 @@
     "!**/.*"
   ],
   "scripts": {
-    "test": "jest",
     "typecheck": "tsc -p ./tsconfig.json",
     "lint": "oxlint",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "clean": "del-cli lib",
     "prepare": "bob build"
   },
   "keywords": [
@@ -78,11 +76,8 @@
     "@evilmartians/lefthook": "^2.1.6",
     "@expo/config-plugins": "^55.0.9",
     "@react-native/typescript-config": "0.83.6",
-    "@types/jest": "^30.0.0",
     "@types/react": "catalog:",
     "commitlint": "^21.0.1",
-    "del-cli": "^7.0.0",
-    "jest": "^30.4.2",
     "oxfmt": "^0.50.0",
     "oxlint": "^1.65.0",
     "react": "catalog:",
@@ -101,13 +96,6 @@
     "react-native-webview": "*"
   },
   "packageManager": "pnpm@12.18.0+sha512.9d7882d5dc82147ecfc4e062aa34834e0ad0296710a1837a1115ae012127d36b7109e321ac1598a1dd0a65597681b1e99917e12ed0d749eae91187943363beb3",
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
-      "<rootDir>/lib/"
-    ]
-  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
