@@ -1,0 +1,77 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+    groups:
+      actions-minor-patch:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: 'ci'
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+    ignore:
+      - dependency-name: 'react-native'
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor
+      - dependency-name: '@react-native/*'
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor
+      - dependency-name: 'react'
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor
+      - dependency-name: '@types/react'
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor
+    groups:
+      react-native:
+        patterns:
+          - 'react-native'
+          - '@react-native/*'
+          - 'react'
+          - '@types/react'
+      lint-format:
+        patterns:
+          - 'oxlint'
+          - 'oxfmt'
+          - 'commitlint'
+          - '@commitlint/*'
+          - '@evilmartians/lefthook'
+        update-types:
+          - minor
+          - patch
+      test:
+        patterns:
+          - 'jest'
+          - '@types/jest'
+        update-types:
+          - minor
+          - patch
+      build-release:
+        patterns:
+          - 'typescript'
+          - 'react-native-builder-bob'
+          - '@changesets/*'
+          - 'del-cli'
+          - '@expo/config-plugins'
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: 'chore'
+      include: scope
