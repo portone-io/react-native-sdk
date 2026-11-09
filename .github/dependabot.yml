@@ -54,19 +54,11 @@ updates:
         update-types:
           - minor
           - patch
-      test:
-        patterns:
-          - 'jest'
-          - '@types/jest'
-        update-types:
-          - minor
-          - patch
       build-release:
         patterns:
           - 'typescript'
           - 'react-native-builder-bob'
           - '@changesets/*'
-          - 'del-cli'
           - '@expo/config-plugins'
         update-types:
           - minor

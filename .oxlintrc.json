@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "react", "jest", "unicorn"],
+  "plugins": ["typescript", "react", "unicorn"],
   "categories": {
     "correctness": "error",
     "suspicious": "error",
@@ -9,8 +9,7 @@
   "env": {
     "browser": true,
     "node": true,
-    "es2022": true,
-    "jest": true
+    "es2022": true
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
@@ -39,13 +38,5 @@
     "ios/",
     "*.lock",
     "pnpm-lock.yaml"
-  ],
-  "overrides": [
-    {
-      "files": ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/**"],
-      "rules": {
-        "typescript/no-explicit-any": "off"
-      }
-    }
   ]
 }

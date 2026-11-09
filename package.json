@@ -38,12 +38,10 @@
     "!**/.*"
   ],
   "scripts": {
-    "test": "jest",
     "typecheck": "tsc -p ./tsconfig.json",
     "lint": "oxlint",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "clean": "del-cli lib",
     "prepare": "bob build"
   },
   "keywords": [
@@ -74,21 +72,18 @@
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",
-    "@commitlint/config-conventional": "^21.0.1",
-    "@evilmartians/lefthook": "^2.1.6",
-    "@expo/config-plugins": "^55.0.9",
-    "@react-native/typescript-config": "0.83.6",
-    "@types/jest": "^30.0.0",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@evilmartians/lefthook": "^2.2.2",
+    "@expo/config-plugins": "~58.0.12",
+    "@react-native/typescript-config": "0.88.1",
     "@types/react": "catalog:",
-    "commitlint": "^21.0.1",
-    "del-cli": "^7.0.0",
-    "jest": "^30.4.2",
-    "oxfmt": "^0.50.0",
-    "oxlint": "^1.65.0",
+    "commitlint": "^21.2.4",
+    "oxfmt": "^0.76.0",
+    "oxlint": "^1.91.0",
     "react": "catalog:",
     "react-native": "catalog:",
-    "react-native-builder-bob": "^0.41.0",
-    "react-native-webview": "^13.16.1",
+    "react-native-builder-bob": "^0.44.1",
+    "react-native-webview": "14.0.1",
     "typescript": "catalog:"
   },
   "resolutions": {
@@ -100,14 +95,7 @@
     "react-native": "*",
     "react-native-webview": "*"
   },
-  "packageManager": "pnpm@11.1.3+sha512.c85357fe17ca12dd23dd7071822666dfd7e3cb76fe214e3370b5ea2fb34f2a231185509b63e717f3cd0acb38dd3f8d82bcd5e8172400ae678b70ea4fbed0896d",
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
-      "<rootDir>/lib/"
-    ]
-  },
+  "packageManager": "pnpm@12.18.0+sha512.9d7882d5dc82147ecfc4e062aa34834e0ad0296710a1837a1115ae012127d36b7109e321ac1598a1dd0a65597681b1e99917e12ed0d749eae91187943363beb3",
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"

@@ -237,7 +237,10 @@ export function createSdkDelegate<
         redirectUrl: 'portone://blank',
       }
       return (
-        <WebView
+        // react-native-webview 14.x는 `WebView<P = undefined>`로 선언되어 있어
+        // 제네릭을 생략하면 props가 never로 추론된다. (16.0.0에서 수정)
+        // https://github.com/react-native-webview/react-native-webview/issues/3970
+        <WebView<object>
           {...props}
           ref={webview}
           originWhitelist={originWhitelist ?? ['*']}
@@ -372,7 +375,10 @@ export function createSdkUIDelegate<
         redirectUrl: 'portone://blank',
       }
       return (
-        <WebView
+        // react-native-webview 14.x는 `WebView<P = undefined>`로 선언되어 있어
+        // 제네릭을 생략하면 props가 never로 추론된다. (16.0.0에서 수정)
+        // https://github.com/react-native-webview/react-native-webview/issues/3970
+        <WebView<object>
           {...props}
           ref={webview}
           originWhitelist={originWhitelist ?? ['*']}
