@@ -81,7 +81,7 @@
     "@types/jest": "^30.0.0",
     "@types/react": "catalog:",
     "commitlint": "^21.0.1",
-    "del-cli": "^7.0.0",
+    "del-cli": "^8.0.1",
     "jest": "^30.4.2",
     "oxfmt": "^0.50.0",
     "oxlint": "^1.65.0",
