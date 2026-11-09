@@ -74,8 +74,8 @@
     "@changesets/cli": "catalog:",
     "@commitlint/config-conventional": "^21.0.1",
     "@evilmartians/lefthook": "^2.1.6",
-    "@expo/config-plugins": "^55.0.9",
-    "@react-native/typescript-config": "0.83.6",
+    "@expo/config-plugins": "~58.0.12",
+    "@react-native/typescript-config": "0.88.1",
     "@types/react": "catalog:",
     "commitlint": "^21.0.1",
     "oxfmt": "^0.50.0",
@@ -83,7 +83,7 @@
     "react": "catalog:",
     "react-native": "catalog:",
     "react-native-builder-bob": "^0.41.0",
-    "react-native-webview": "^13.16.1",
+    "react-native-webview": "14.0.1",
     "typescript": "catalog:"
   },
   "resolutions": {

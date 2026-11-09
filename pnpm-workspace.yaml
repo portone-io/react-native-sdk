@@ -16,7 +16,7 @@ engineStrict: true
 
 catalog:
   '@changesets/cli': ^2.31.0
-  '@types/react': ^19.2.14
-  react: ~19.2.5
-  react-native: ~0.83.6
-  typescript: ^6.0.3
+  '@types/react': ~19.3.0
+  react: 19.3.0
+  react-native: 0.88.1
+  typescript: ~6.0.3
