@@ -9,13 +9,18 @@ minimumReleaseAgeStrict: true
 
 trustPolicy: no-downgrade
 trustPolicyIgnoreAfter: 525960
+trustPolicyExclude:
+  # CI 게시가 신규 패키지(lefthook-android-arm64) E404로 중단되어 메인테이너가 수동 게시함.
+  # 서명된 태그 커밋(eb4e504b)과 gitHead 일치, 번들 바이너리가 OIDC 게시 플랫폼 패키지와 동일.
+  # https://github.com/evilmartians/lefthook/pull/1598
+  - '@evilmartians/lefthook@2.2.2'
 
 blockExoticSubdeps: true
 
 engineStrict: true
 
 catalog:
-  '@changesets/cli': ^2.31.0
+  '@changesets/cli': ^2.31.1
   '@types/react': ~19.3.0
   react: 19.3.0
   react-native: 0.88.1
