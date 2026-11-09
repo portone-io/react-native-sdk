@@ -42,12 +42,10 @@ jobs:
         id: changesets
         uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish: pnpm publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish-script: pnpm publish
 
       - name: Send a Slack notification if a publish happens
-        if: ${{ steps.changesets.outputs.hasChangesets == 'false' }}
+        if: ${{ steps.changesets.outputs.has-changesets == 'false' }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
