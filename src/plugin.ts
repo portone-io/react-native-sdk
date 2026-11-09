@@ -1,66 +1,14 @@
-import {
-  type ConfigPlugin,
-  withAndroidManifest,
-  withInfoPlist,
-} from '@expo/config-plugins'
-import { appScheme } from './appScheme'
+import type { ConfigPlugin } from '@expo/config-plugins'
 
-const packages = [
-  ...new Set(
-    Object.values(appScheme)
-      .map(({ android }) => android)
-      .filter((name) => name != null)
-  ),
-]
-
-const iosSchemes = Object.entries(appScheme)
-  .filter(([_scheme, { ios }]) => ios != null)
-  .map(([scheme]) => scheme)
-
+/**
+ * @deprecated 외부 앱 실행에 <queries> 및 LSApplicationQueriesSchemes 설정이
+ * 더 이상 필요하지 않아 이 플러그인은 아무 동작도 하지 않습니다.
+ * app.json의 plugins 항목에서 제거해도 됩니다.
+ */
 const withSdkQueries: ConfigPlugin = (config) => {
-  config = withAndroidManifest(config, (androidManifest) => {
-    androidManifest.modResults.manifest = {
-      ...androidManifest.modResults.manifest,
-      queries: androidManifest.modResults.manifest.queries.concat({
-        package: packages.map((name) => ({ $: { 'android:name': name } })),
-        intent: [
-          {
-            action: [
-              {
-                $: {
-                  'android:name': 'android.intent.action.VIEW',
-                },
-              },
-            ],
-            category: [
-              {
-                $: {
-                  'android:name': 'android.intent.category.BROWSABLE',
-                },
-              },
-            ],
-            data: [
-              {
-                $: {
-                  'android:scheme': 'https',
-                },
-              },
-            ],
-          },
-        ],
-      }),
-    }
-    return androidManifest
-  })
-  config = withInfoPlist(config, (infoPlist) => {
-    const alreadyIncluded = new Set(
-      infoPlist.modResults.LSApplicationQueriesSchemes
-    )
-    infoPlist.modResults.LSApplicationQueriesSchemes = (
-      infoPlist.modResults.LSApplicationQueriesSchemes ?? []
-    ).concat(iosSchemes.filter((scheme) => !alreadyIncluded.has(scheme)))
-    return infoPlist
-  })
+  console.warn(
+    '[@portone/react-native-sdk] plugin은 더 이상 필요하지 않습니다. app.json의 plugins에서 제거해 주세요.'
+  )
   return config
 }
 

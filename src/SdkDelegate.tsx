@@ -96,11 +96,7 @@ function onShouldStartLoadWithRequest<Response>(
       const host = url.slice(protocol.length + 3).split('/', 2)[0]
       // Native Module로 일반화 필요
       if (host === 'gcash.onelink.me' && Platform.OS === 'android') {
-        marketIfFailWithDeepLink(
-          'gcash://com.mynt.gcash/app',
-          url,
-          `market://details?id=${appScheme.gcash.android}`
-        )
+        openURL(url)
         return false
       }
       return true
@@ -151,7 +147,7 @@ function onShouldStartLoadWithRequest<Response>(
             ? `market://details?id=${appScheme[protocol]?.android}`
             : `itms-apps://apps.apple.com/app/${appScheme[protocol]?.ios}`
         marketIfFail(url, marketUrl)
-      } else Linking.openURL(url).catch(() => {})
+      } else openURL(url)
       return false
     }
   }
@@ -387,30 +383,21 @@ export function createSdkUIDelegate<
   )
 }
 
-async function marketIfFail(link: string, market: string) {
-  try {
-    if (await Linking.canOpenURL(link)) return Linking.openURL(link)
-  } catch {
-    console.error(
-      '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
+function openURL(url: string) {
+  return Linking.openURL(url).catch((error) => {
+    console.warn(
+      '[@portone/react-native-sdk] 외부 앱을 열지 못했습니다.',
+      url,
+      error
     )
-  }
-  trace('marketFallback', { link, market })
-  return Linking.openURL(market)
+  })
 }
 
-async function marketIfFailWithDeepLink(
-  schemeUrl: string,
-  deeplink: string,
-  market: string
-) {
+async function marketIfFail(link: string, market: string) {
   try {
-    if (await Linking.canOpenURL(schemeUrl)) return Linking.openURL(deeplink)
+    return await Linking.openURL(link)
   } catch {
-    console.error(
-      '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
-    )
+    trace('marketFallback', { link, market })
+    return openURL(market)
   }
-  trace('marketFallback', { deeplink, market })
-  return Linking.openURL(market)
 }
