@@ -19,6 +19,13 @@ blockExoticSubdeps: true
 
 engineStrict: true
 
+auditConfig:
+  ignoreGhsas:
+    # glob: 13.0.7에 abort 처리 수정이 백포트됨. 권고의 영향 범위(<=14.0.1)가 아직 갱신되지 않은 오탐.
+    - GHSA-3g3m-2fjr-6pw4
+    # minimatch: 외부에서 넣은 glob 패턴이 있어야 성립. react-native-builder-bob은 고정 패턴만 사용.
+    - GHSA-g3hv-75wg-m249
+
 catalog:
   '@changesets/cli': ^2.31.1
   '@types/react': ~19.3.0
