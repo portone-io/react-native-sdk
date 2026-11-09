@@ -29,6 +29,6 @@ auditConfig:
 catalog:
   '@changesets/cli': ^3.0.3
   '@types/react': ~19.3.0
-  react: 19.3.0
+  react: 19.3.1
   react-native: 0.88.1
   typescript: ~6.0.3
