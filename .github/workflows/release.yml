@@ -43,13 +43,14 @@ jobs:
         id: changesets
         uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish-script: pnpm stage publish --provenance
+          publish-script: pnpm stage publish --recursive --provenance --report-summary
 
       - name: Send a Slack notification if a staging happens
         if: ${{ steps.changesets.outputs.has-changesets == 'false' }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
+          jq -e '.publishedPackages | length > 0' pnpm-publish-summary.json > /dev/null || exit 0
           VERSION=$(jq -r '.version' package.json)
           curl -X POST -H 'Content-type: application/json'\
             --data '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"npm에 `@portone/react-native-sdk` 버전 *v'"$VERSION"'* 가 스테이징되었습니다. 메인테이너의 승인(2FA) 후 배포됩니다 :hourglass_flowing_sand:\n승인: npmjs.com 패키지 페이지의 *Staged Packages* 탭 또는 `npm stage list @portone/react-native-sdk` → `npm stage approve <stage-id>`"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"npm 페이지 보기"},"value":"show_npm_page","url":"https://www.npmjs.com/package/@portone/react-native-sdk","action_id":"show_npm_page"},{"type":"button","text":{"type":"plain_text","text":"체인지로그 보기"},"value":"show_changelog","url":"https://github.com/portone-io/react-native-sdk/blob/main/CHANGELOG.md","action_id":"show_changelog"}]}]}'\
