@@ -87,7 +87,7 @@
     "oxlint": "^1.65.0",
     "react": "catalog:",
     "react-native": "catalog:",
-    "react-native-builder-bob": "^0.41.0",
+    "react-native-builder-bob": "^0.44.1",
     "react-native-webview": "^13.16.1",
     "typescript": "catalog:"
   },
