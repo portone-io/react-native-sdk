@@ -83,7 +83,7 @@
     "commitlint": "^21.0.1",
     "del-cli": "^7.0.0",
     "jest": "^30.4.2",
-    "oxfmt": "^0.50.0",
+    "oxfmt": "^0.75.0",
     "oxlint": "^1.65.0",
     "react": "catalog:",
     "react-native": "catalog:",
