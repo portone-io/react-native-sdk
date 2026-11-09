@@ -43,8 +43,8 @@ importers:
         specifier: ^55.0.9
         version: 55.0.9
       '@react-native/typescript-config':
-        specifier: 0.83.6
-        version: 0.83.6
+        specifier: 0.83.10
+        version: 0.83.10
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -1376,8 +1376,8 @@ packages:
   '@react-native/normalize-colors@0.83.9':
     resolution: {integrity: sha512-GSXSvH+siDF2z+XtoF3Kk6zRFMWhGIpfq9nalBd4DSV97g5yNRQ5Htm2fpq7vBYNN+hVgvGZf7rRqnjn8bvfHg==}
 
-  '@react-native/typescript-config@0.83.6':
-    resolution: {integrity: sha512-8+sMNBE391MBZjAHGI5EAV14IHbREPyOEZe9yc1PmO/t2nirMPohe+HXRHkl/ANQusCE30EVVu4JGv76jw2WBw==}
+  '@react-native/typescript-config@0.83.10':
+    resolution: {integrity: sha512-5MPn4HewrJJwCQ/pNEXTZ4znVF+9YvfbXZXEn9BEJ85mv8hUdEYO8Q6YZ1CNzepQigA1jWvA53ThqviCG+RUBQ==}
 
   '@react-native/virtualized-lists@0.83.9':
     resolution: {integrity: sha512-fZ84faVUANrBU7GfL1wPSkGkn5cnCPVXxAwutKit1S5i8hlfwCnt0gE9Fu/0fpAIeuGxHVed00w2xxDVXyLxKQ==}
@@ -1574,10 +1574,12 @@ packages:
   '@xmldom/xmldom@0.8.13':
     resolution: {integrity: sha512-KRYzxepc14G/CEpEGc3Yn+JKaAeT63smlDr+vjB8jRfgTBBI9wRj/nkQEO+ucV8p8I9bfKLWp37uHgFrbntPvw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@xmldom/xmldom@0.9.10':
     resolution: {integrity: sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw==}
     engines: {node: '>=14.6'}
+    deprecated: this version has critical issues, please update to the latest version
 
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -2187,6 +2189,7 @@ packages:
   git-raw-commits@5.0.1:
     resolution: {integrity: sha512-Y+csSm2GD/PCSh6Isd/WiMjNAydu0VBiG9J7EdQsNA5P9uXvLayqjmTsNlK5Gs9IhblFZqOU0yid5Il5JPoLiQ==}
     engines: {node: '>=18'}
+    deprecated: Deprecated and no longer maintained. Use @conventional-changelog/git-client instead.
     hasBin: true
 
   glob-parent@5.1.2:
@@ -3045,8 +3048,8 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-is@19.2.6:
-    resolution: {integrity: sha512-XjBR15BhXuylgWGuslhDKqlSayuqvqBX91BP8pauG8kd1zY8kotkNWbXksTCNRarse4kuGbe2kIY05ARtwNIvw==}
+  react-is@19.3.1:
+    resolution: {integrity: sha512-RRieF6IyxQBkcK6pP8xOHprLTPW6QjRkbGdImtqNme+/hYVwCZkLQLdlZGOhUqXwkS9IEynaGvPJtv6XB/cz0Q==}
 
   react-native-builder-bob@0.41.0:
     resolution: {integrity: sha512-avuPbEUz4n4w2aCgTsOAA9JOYLXMYZSKWKf84EO0CADsbf2UWl/yXVyGgKmM9ueGThBRvKJtfMh8DLSInGZuSQ==}
@@ -5175,7 +5178,7 @@ snapshots:
 
   '@react-native/normalize-colors@0.83.9': {}
 
-  '@react-native/typescript-config@0.83.6': {}
+  '@react-native/typescript-config@0.83.10': {}
 
   '@react-native/virtualized-lists@0.83.9(@types/react@19.2.14)(react-native@0.83.9(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.6))(react@19.2.6)':
     dependencies:
@@ -7086,7 +7089,7 @@ snapshots:
       '@jest/schemas': 30.4.1
       ansi-styles: 5.2.0
       react-is-18: react-is@18.3.1
-      react-is-19: react-is@19.2.6
+      react-is-19: react-is@19.3.1
 
   promise@8.3.0:
     dependencies:
@@ -7122,7 +7125,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-is@19.2.6: {}
+  react-is@19.3.1: {}
 
   react-native-builder-bob@0.41.0:
     dependencies:
