@@ -1,5 +1,15 @@
 # @portone/react-native-sdk
 
+## 0.8.0
+
+### Minor Changes
+
+- 247b3aa: canOpenURL 대신 openURL로 외부 결제 앱을 직접 실행하도록 변경합니다. AndroidManifest.xml의 `<queries>` 및 Info.plist의 `LSApplicationQueriesSchemes` 설정이 더 이상 필요하지 않으며, Expo config plugin은 no-op으로 유지됩니다.
+
+### Patch Changes
+
+- 271207f: `onError`로 전달되는 오류에 브라우저 SDK 오류의 `code` 등 속성을 보존하고, `onError`의 오류 타입을 메서드별 브라우저 SDK 오류 타입(`IdentityVerificationError`, `PaymentError` 등)으로 지정합니다.
+
 ## 0.7.0
 
 ### Minor Changes
